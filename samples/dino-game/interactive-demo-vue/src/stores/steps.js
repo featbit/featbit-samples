@@ -1,37 +1,35 @@
+
+
 import { defineStore } from 'pinia'
 import { ref, computed } from "vue";
 import { useFeatBitStore } from '@/featbit'
 
 export const useStepsStore = defineStore('steps', () => {
-    const currentStep = ref(0)
-    const dinoGame = ref({
-        currentStep: 0,
-        gameIsReleased: false
+    const currentTaskIndex = ref(0)
+    const releaseDinoGame = ref({
+        currentStep: 0
     })
-    const task2Enabled = ref(false)
-
-    // const showPreviousButton = computed(() => state.currentStep > 0)
-    // const showNextButton = computed(() => state.currentStep < 2)
-    function nextStep() {
-        currentStep.value++
+    const releaseDinoGameDifficulty = ref({
+        enabled: false,
+        currentStep: 0
+    })
+    function setDinoGameDifficultyAlive(isActive) {
+        this.releaseDinoGameDifficulty.enabled = isActive;
     }
-    function previousStep() {
-        currentStep.value--
+    function setCurrentTaskIndex(index) {
+        this.currentTaskIndex = index;
     }
 
-    const featBitStore = useFeatBitStore();
-    // useFeatBitStore.$subscribe((mutation, state) => {
-    //     if (featBitStore.flags && featBitStore.flags["game-runner"])
-    //         task2Enabled.value = featBitStore.flags["game-runner"];
-    // })
+    // subscribe if game-runner is true, enable task2's next-task button
+    useFeatBitStore().$subscribe((mutation, state) => {
+        useStepsStore().setDinoGameDifficultyAlive(state.flags["game-runner"] || false);
+    })
 
     return {
-        currentStep,
-        dinoGame,
-        task2Enabled,
-        // showPreviousButton,
-        // showNextButton,
-        nextStep,
-        previousStep
+        currentTaskIndex,
+        releaseDinoGame,
+        releaseDinoGameDifficulty,
+        setDinoGameDifficultyAlive,
+        setCurrentTaskIndex
     }
 })

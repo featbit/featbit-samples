@@ -24,7 +24,7 @@ export default {
             <h1>Releasing Dino Game</h1>
         </div>
         <div class="steps">
-            <div class="step1" v-if="store.dinoGame.currentStep == 0">
+            <div class="step1" v-if="store.releaseDinoGame.currentStep == 0">
                 <p>// Set up</p>
                 <p>We're connecting your FeatBit account to Dino Game so you can use
                     feature flags to release and manage the game.
@@ -37,7 +37,7 @@ export default {
                     Now that FeatBit is connected, we can release the Dino Game now.
                 </p>
             </div>
-            <div class="step2" v-if="store.dinoGame.currentStep == 1">
+            <div class="step2" v-if="store.releaseDinoGame.currentStep == 1">
                 <p>// Release Dino Game</p>
                 <p>Back to the flags list portal which contains "game-runner" feature flag.
                     Click on the name or detail link to go to the feature flag targeting page.</p>
@@ -52,12 +52,13 @@ export default {
                 </p>
             </div>
             <div class="steps-action">
-                <a-button v-if="store.dinoGame.currentStep == 0" style="margin-right;: 8px" type="primary"
-                    @click="store.dinoGame.currentStep++">Next</a-button>
-                <a-button v-if="store.dinoGame.currentStep == 1" @click="store.dinoGame.currentStep--">Previous
+                <a-button v-if="store.releaseDinoGame.currentStep == 0" style="margin-right;: 8px" type="primary"
+                    @click="store.releaseDinoGame.currentStep++">Next</a-button>
+                <a-button v-if="store.releaseDinoGame.currentStep == 1" @click="store.releaseDinoGame.currentStep--">
+                    Previous
                 </a-button>
-                <a-button v-if="store.task2Enabled === true" type="primary" style="float:right;"
-                    @click="store.dinoGame.currentStep--">Next Task</a-button>
+                <a-button v-if="store.releaseDinoGameDifficulty.enabled === true" type="primary" style="float:right;"
+                    @click="store.setCurrentTaskIndex(1)">Next Task</a-button>
             </div>
         </div>
     </div>

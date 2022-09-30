@@ -27,16 +27,16 @@ export default {
       
 <template>
     <div class="steps-wrapper">
-        <a-steps :current="store.currentStep">
+        <a-steps :current="store.currentTaskIndex">
             <a-step title="Release Dino Game">
             </a-step>
             <a-step title="Change Game Difficulty" />
             <a-step title="Demo complete" />
         </a-steps>
         <div class="steps-content">
-            <StepReleaseDinoGame v-if="store.currentStep == 0" />
-            <StepGameDifficulty v-if="store.currentStep == 1" />
-            <StepComplete v-if="store.currentStep == 2" />
+            <StepReleaseDinoGame v-if="store.currentTaskIndex == 0" />
+            <StepGameDifficulty v-if="store.currentTaskIndex == 1" />
+            <StepComplete v-if="store.currentTaskIndex == 2" />
         </div>
         <!-- <div class="steps-action">
             <a-button v-if="store.showNextButton == true" 

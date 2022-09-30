@@ -39,11 +39,11 @@ export default {
             </div>
             <div class="step2" v-if="store.dinoGame.currentStep == 1">
                 <p>// Release Dino Game</p>
-                <p>Back to the flags list portal which contains "game-runner" feature flag. 
-                   Click on the name or detail link to go to the feature flag targeting page.</p>
+                <p>Back to the flags list portal which contains "game-runner" feature flag.
+                    Click on the name or detail link to go to the feature flag targeting page.</p>
                 <img src="@/assets/imgs/the-flags-list.png" />
                 <p>Switch feature flag from Off to ON. The feature flag will serve variation "true"
-                   to the Dino Game. It means the Dino Game (below) will be released immediately.
+                    to the Dino Game. It means the Dino Game (below) will be released immediately.
                 </p>
                 <img src="@/assets/imgs/ff-switch-on.png" />
                 <p>
@@ -56,6 +56,8 @@ export default {
                     @click="store.dinoGame.currentStep++">Next</a-button>
                 <a-button v-if="store.dinoGame.currentStep == 1" @click="store.dinoGame.currentStep--">Previous
                 </a-button>
+                <a-button v-if="store.task2Enabled === true" type="primary" style="float:right;"
+                    @click="store.dinoGame.currentStep--">Next Task</a-button>
             </div>
         </div>
     </div>

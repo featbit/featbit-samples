@@ -3,28 +3,12 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Steps from './components/Steps/Steps.vue'
 import DinoGame from './components/DinoGame/DinoGame.vue'
-import { useFeatBitStore } from '@/stores/featbit'
-import ffcClient from "ffc-js-client-side-sdk";
-
-// const store = useFeatBitStore()
-
-// ffcClient.on("ff_update", (changes) => {
-//   if (changes.length) {
-//     store.setFlags(changes)
-//   }
-// });
-
-// ffcClient.waitUntilReady().then((data) => {
-//   if (data.length) {
-//     store.setFlags(data)
-//   }
-// });
 
 
 </script>
 
 <template>
-  <div>
+  <div style="padding-bottom: 20px;">
     <Steps />
     <DinoGame />
   </div>

@@ -12,20 +12,7 @@ export default {
     },
     setup() {
         const store = useStepsStore();
-        // const {
-        //     currentStep,
-        //     nextStep,
-        //     previousStep,
-        //     showNextButton,
-        //     showPreviousButton
-        // } = store;
-        // return {
-        //     currentStep,
-        //     nextStep,
-        //     previousStep,
-        //     showNextButton,
-        //     showPreviousButton
-        // };
+
         return {
             store
         };
@@ -51,12 +38,12 @@ export default {
             <StepGameDifficulty v-if="store.currentStep == 1" />
             <StepComplete v-if="store.currentStep == 2" />
         </div>
-        <div class="steps-action">
+        <!-- <div class="steps-action">
             <a-button v-if="store.showNextButton == true" 
                       style="margin-right;: 8px"
                       type="primary" @click="store.nextStep">Next Step</a-button>
             <a-button v-if="store.showPreviousButton == true" @click="store.previousStep()">Previous
             </a-button>
-        </div>
+        </div> -->
     </div>
 </template>

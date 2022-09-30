@@ -78,7 +78,7 @@
      * Default game width.
      * @const
      */
-    var DEFAULT_WIDTH = 600;
+    var DEFAULT_WIDTH = 700;
 
     /**
      * Frames per second.
@@ -868,8 +868,8 @@
                   window.devicePixelRatio;
 
             const cssScale = scale;
-            this.containerEl.style.transform =
-                'scale(' + cssScale + ') translateY(' + translateY + 'px)';
+            // this.containerEl.style.transform =
+            //     'scale(' + cssScale + ') translateY(' + translateY + 'px)';
         },
         
         /**
@@ -2425,8 +2425,8 @@
      * @enum {number}
      */
     HorizonLine.dimensions = {
-        WIDTH: 600,
-        HEIGHT: 12,
+        WIDTH: 700,
+        HEIGHT: 22,
         YPOS: 127
     };
 

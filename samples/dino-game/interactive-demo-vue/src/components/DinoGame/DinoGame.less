@@ -32,23 +32,24 @@ html, body {
   font-size: 1em;
   line-height: 1.55;
   margin: 0 auto;
-  max-width: 600px;
-  padding-top: 100px;
+  max-width: 700px;
+  padding-top: 0px;
   width: 100%;
 }
 
 .offline .runner-container {
   height: 150px;
-  max-width: 600px;
+  max-width: 700px;
   overflow: hidden;
-  position: absolute;
+  // position: absolute;
+  position: relative;
   top: 35px;
   width: 44px;
 }
 
 .offline .runner-canvas {
   height: 150px;
-  max-width: 600px;
+  max-width: 700px;
   opacity: 1;
   overflow: hidden;
   position: absolute;
@@ -97,7 +98,7 @@ html, body {
   }
 }
 
-@media (min-width: 600px) and (max-width: 736px) and (orientation: landscape) {
+@media (min-width: 700px) and (max-width: 736px) and (orientation: landscape) {
   .offline .interstitial-wrapper {
     margin-left: 0;
     margin-right: 0;
@@ -150,7 +151,8 @@ html, body {
 }
 
 .arcade-mode .interstitial-wrapper {
-  height: 100vh;
+  // height: 100vh;
+  height: 280px;
   max-width: 100%;
   overflow: hidden;
 }

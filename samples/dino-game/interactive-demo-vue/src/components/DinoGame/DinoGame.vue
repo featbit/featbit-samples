@@ -1,24 +1,37 @@
 <script>
-// import { Runner } from './index'
-// import './index.js';
+import { ffcStore } from "../../featbit";
 import Runner from './index.js';
 
 export default {
     components: {
     },
+    data() {
+        return {
+
+        }
+    },
     mounted() {
         new Runner('.interstitial-wrapper');
-        // new dg.Runner('.interstitial-wrapper');
+        console.log(ffcStore.flags["difficulty-mode"]);
     }
 }
 </script>
 
 <style lang="less">
 @import "./DinoGame.less";
+
+.dino-game-wrapper {
+    border: 1px solid gray;
+    width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>    
+
     
 <template>
-    <div class="interstitial-wrapper">
+    <div class="dino-game-wrapper">
+        <div class="interstitial-wrapper">
             <div id="main-content">
                 <div class="icon icon-offline" alt=""></div>
             </div>
@@ -35,4 +48,5 @@ export default {
                 </template>
             </div>
         </div>
+    </div>
 </template>

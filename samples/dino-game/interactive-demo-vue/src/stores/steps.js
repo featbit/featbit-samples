@@ -1,13 +1,23 @@
 import { defineStore } from 'pinia'
 
 export const useStepsStore = defineStore('steps', {
-    state: () => ({ count: 0, name: 'Eduardo' }),
+    state: () => ({ 
+        currentStep: 0, 
+        dinoGame: {
+            currentStep: 0,
+            gameIsReleased: false
+        }
+    }),
     getters: {
-        doubleCount: (state) => state.count * 2,
+        showPreviousButton: (state) => state.currentStep > 0,
+        showNextButton: (state) => state.currentStep < 2,
     },
     actions: {
-        increment() {
-            this.count++
+        nextStep() {    
+            this.currentStep++
         },
+        previousStep(){
+            this.currentStep--
+        }
     },
 })

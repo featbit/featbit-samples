@@ -1,5 +1,4 @@
 <script>
-import { ffcStore } from "../../featbit";
 import Runner from './index.js';
 
 export default {
@@ -11,8 +10,8 @@ export default {
         }
     },
     mounted() {
-        new Runner('.interstitial-wrapper');
-        console.log(ffcStore.flags["difficulty-mode"]);
+        // new Runner('.interstitial-wrapper');
+        // console.log(ffcStore.flags["difficulty-mode"]);
     }
 }
 </script>

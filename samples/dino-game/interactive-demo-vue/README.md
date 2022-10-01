@@ -1,7 +1,18 @@
-# Vue 3 + Vite
+## Install
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```
+npm install
+```
 
-## Recommended IDE Setup
+## Run
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+```
+npm run dev
+```
+
+## Store for VUE
+
+This sample used Pinia as the Store for VUE. We wrapped FeatBit's feature flags in a pinia store named `useFeatBitStore` in file '/src/featbit.js'.  
+
+This facilitates the usage of our feature flags. Every component can use feature flags through `useFeatBitStore`. This ensures that the feature flags can be used and updated in real-time, and all of this is managed in file '/src/featbit.js'
+

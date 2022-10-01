@@ -1,6 +1,6 @@
 <script>
 import { onUnmounted } from 'vue';
-import Runner from './index.js';
+import Runner from './DinoGameRunner.js';
 
 export default {
     components: {

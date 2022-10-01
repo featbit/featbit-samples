@@ -1,5 +1,4 @@
 <script>
-import Runner from './index.js';
 import DinoGameCore from './DinoGameCore.vue'
 import { useFeatBitStore } from '@/featbit'
 

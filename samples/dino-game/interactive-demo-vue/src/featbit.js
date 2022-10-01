@@ -10,7 +10,7 @@ export const featBit = {
     install(app, options) {
         const _option = Object.assign(
             {
-                secret: "ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==", // replace with your won secret
+                secret: "ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==",
                 user: {
                     id: 'my-user',
                     userName: 'my user',
@@ -34,7 +34,6 @@ export const featBit = {
         ffcClient.waitUntilReady().then((changes) => changes.length ? store.setFlags(changes) : null);
     }
 }
-
 
 export const useFeatBitStore = defineStore('featbit', {
     state: () => ({

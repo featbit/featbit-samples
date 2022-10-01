@@ -20,7 +20,6 @@ export default {
 <style lang="less" scoped>
 @import "./Steps.less";
 </style>    
-      
           
 <template>
     <div class="release-runner">
@@ -41,7 +40,6 @@ export default {
                     Now that FeatBit is connected, we can release the Dino Game now.
                 </p>
             </div>
-
             <div class="step2" v-if="store.currentStep == 1">
                 <p>// Release Dino Game</p>
                 <p>Back to the flags list portal which contains "game-runner" feature flag.

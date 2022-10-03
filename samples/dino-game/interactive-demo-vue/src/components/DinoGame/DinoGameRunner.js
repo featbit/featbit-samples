@@ -11,7 +11,7 @@
      * @constructor
      * @export
      */
-    function Runner(outerContainerId, opt_config) {
+    function Runner(outerContainerId, speed, opt_config) {
         // Singleton
         if (Runner.instance_) {
             return Runner.instance_;
@@ -24,6 +24,16 @@
         this.detailsButton = this.outerContainerEl.querySelector('#details-button');
 
         this.config = opt_config || Runner.config;
+        if(speed)
+            this.config.SPEED = speed;
+        // console.log(mode);
+        // if (mode != 'easy'){
+        //     Runner.config.SPEED = 26;
+        //     this.config.SPEED = 26;
+        //     console.log(this.config);
+        //     console.log(Runner.config);
+        // }
+
 
         this.dimensions = Runner.defaultDimensions;
 
@@ -429,7 +439,7 @@
             if (this.activated) {
                 this.setArcadeModeContainerScale();
             }
-            
+
             // Redraw the elements back onto the canvas.
             if (this.canvas) {
                 this.canvas.width = this.dimensions.WIDTH;
@@ -474,7 +484,7 @@
                     'from { width:' + Trex.config.WIDTH + 'px }' +
                     'to { width: ' + this.dimensions.WIDTH + 'px }' +
                     '}';
-                
+
                 // create a style sheet to put the keyframe rule in 
                 // and then place the style sheet in the html head    
                 var sheet = document.createElement('style');
@@ -842,7 +852,7 @@
                 this.update();
             }
         },
-        
+
         /**
          * Hides offline messaging for a fullscreen game only experience.
          */
@@ -863,15 +873,15 @@
             // Positions the game container at 10% of the available vertical window
             // height minus the game container height.
             const translateY = Math.ceil(Math.max(0, (windowHeight - scaledCanvasHeight -
-                                                      Runner.config.ARCADE_MODE_INITIAL_TOP_POSITION) *
-                                                  Runner.config.ARCADE_MODE_TOP_POSITION_PERCENT)) *
-                  window.devicePixelRatio;
+                Runner.config.ARCADE_MODE_INITIAL_TOP_POSITION) *
+                Runner.config.ARCADE_MODE_TOP_POSITION_PERCENT)) *
+                window.devicePixelRatio;
 
             const cssScale = scale;
             // this.containerEl.style.transform =
             //     'scale(' + cssScale + ') translateY(' + translateY + 'px)';
         },
-        
+
         /**
          * Pause the game if the tab is not in focus.
          */

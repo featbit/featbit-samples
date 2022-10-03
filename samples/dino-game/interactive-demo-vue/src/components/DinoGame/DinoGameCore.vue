@@ -1,12 +1,20 @@
 <script>
-import { onUnmounted } from 'vue';
 import Runner from './DinoGameRunner.js';
+import { useFeatBitStore } from '@/featbit'
 
 export default {
     components: {
     },
+    setup() {
+        const featBitStore = useFeatBitStore();
+
+        return {
+            featBitStore
+        };
+    },
     mounted() {
-        const r = new Runner(".interstitial-wrapper");
+        const difficulty = this.featBitStore.flags["difficulty-mode"]
+        const r = new Runner(".interstitial-wrapper", difficulty == 'hard' ? 26 : (difficulty == 'normal' ? 16 : 6));
     },
     unmounted() {
         console.log('unmounted');

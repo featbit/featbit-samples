@@ -1,24 +1,46 @@
 <script>
 import Runner from './DinoGameRunner.js';
+import { ref, computed } from "vue";
 import { useFeatBitStore } from '@/featbit'
 
 export default {
     components: {
     },
     setup() {
-        const featBitStore = useFeatBitStore();
-
+        const runner = null;
         return {
-            featBitStore
-        };
+            runner
+        }
+    },
+    props: {
+        difficulty: String
+    },
+    watch: {
+        difficulty: function (newVal, oldVal) { // watch it
+            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+
+            const difficulty = this.difficulty == 'hard' ? 26 : (this.difficulty === 'normal' ? 16 : 6)
+            this.runner.setSpeed(difficulty)
+        }
     },
     mounted() {
-        const difficulty = this.featBitStore.flags["difficulty-mode"]
-        const r = new Runner(".interstitial-wrapper", difficulty == 'hard' ? 26 : (difficulty == 'normal' ? 16 : 6));
+        this.mount();
     },
     unmounted() {
-        console.log('unmounted');
-        window['Runner'] = null;
+        this.unmount();
+    },
+    methods: {
+        mount() {
+            const difficulty = this.difficulty == 'hard' ? 26 : (this.difficulty === 'normal' ? 16 : 6)
+            this.runner = new Runner(".interstitial-wrapper", difficulty);
+        },
+        unmount() {
+            this.runner.clearArcadeMode();
+            delete this.runner;
+            this.runner = null;
+            delete window['Runner'];
+            window['Runner'] = null;
+        }
     }
 }
 </script>
@@ -29,7 +51,7 @@ export default {
 
     
 <template>
-    <div class="interstitial-wrapper">
+    <div id="dino-game-core" class="interstitial-wrapper">
         <div id="main-content">
             <div class="icon icon-offline" alt=""></div>
         </div>

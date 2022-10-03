@@ -13,10 +13,10 @@
      */
     function Runner(outerContainerId, speed, opt_config) {
         // Singleton
-        if (Runner.instance_) {
-            return Runner.instance_;
-        }
-        Runner.instance_ = this;
+        // if (Runner.instance_) {
+        //     return Runner.instance_;
+        // }
+        // Runner.instance_ = this;
 
         this.outerContainerEl = document.querySelector(outerContainerId);
         this.containerEl = null;
@@ -24,15 +24,8 @@
         this.detailsButton = this.outerContainerEl.querySelector('#details-button');
 
         this.config = opt_config || Runner.config;
-        if(speed)
+        if (speed)
             this.config.SPEED = speed;
-        // console.log(mode);
-        // if (mode != 'easy'){
-        //     Runner.config.SPEED = 26;
-        //     this.config.SPEED = 26;
-        //     console.log(this.config);
-        //     console.log(Runner.config);
-        // }
 
 
         this.dimensions = Runner.defaultDimensions;
@@ -859,6 +852,17 @@
         setArcadeMode() {
             document.body.classList.add(Runner.classes.ARCADE_MODE);
             this.setArcadeModeContainerScale();
+        },
+
+        clearArcadeMode() {
+            document.body.classList.remove(Runner.classes.ARCADE_MODE);
+            this.playing = false;
+            this.activated = false;
+            this.stopListening();
+            // this.runner.clearCanvas();
+            // this.runner.stop();
+            // this.runner.invert(true);
+            // this.runner.adjustDimensions();
         },
 
         /**

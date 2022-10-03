@@ -49,10 +49,11 @@ export default {
                     @click="store.currentStep=2">Next Task</a-button>
             </div>
 
-            <div v-if="store.currentStep == 1 && featBitStore.flags['difficulty-mode'] === true">
-                <p>
-                    <span style="color: yellow;font-weight: 600;margin-right: 15px;">Success !</span>
-                    Now that FeatBit is connected, we can release the Dino Game now.
+            <div v-if="featBitStore.flags['difficulty-mode'] !== 'easy'" 
+                 style="margin-top:20px;margin-bottom: 5px;">
+                <p style="font-size: 27px;margin-bottom:0px;">
+                    <span style="color: yellow;font-weight: 600;margin-right: 10px;">Success !</span>
+                    The game difficulty mode has been changed. Try the game once again !
                 </p>
             </div>
         </div>

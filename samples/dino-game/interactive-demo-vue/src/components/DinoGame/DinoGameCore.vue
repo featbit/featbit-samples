@@ -19,8 +19,11 @@ export default {
         difficulty: function (newVal, oldVal) { // watch it
             console.log('Prop changed: ', newVal, ' | was: ', oldVal)
 
-            const difficulty = this.difficulty == 'hard' ? 26 : (this.difficulty === 'normal' ? 16 : 6)
-            this.runner.setSpeed(difficulty)
+            const difficultyNumber = this.difficulty == 'hard' ? 26 : (this.difficulty === 'normal' ? 16 : 6)
+            console.log('this.difficulty: ' + difficultyNumber)
+            // this.runner.setSpeed(difficultyNumber)
+            this.runner.config.SPEED = difficultyNumber
+            this.runner.restart()
         }
     },
     mounted() {
@@ -52,6 +55,9 @@ export default {
     
 <template>
     <div id="dino-game-core" class="interstitial-wrapper">
+        <div style="position:relative">
+            <h2 style="position: absolute;left:20px;top:20px;font-family:cursive;">Welcome to DINO GAME! Mode Level : {{difficulty}}</h2>
+        </div>
         <div id="main-content">
             <div class="icon icon-offline" alt=""></div>
         </div>

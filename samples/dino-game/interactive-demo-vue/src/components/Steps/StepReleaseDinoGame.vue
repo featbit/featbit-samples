@@ -61,7 +61,9 @@ export default {
                     @click="store.currentStep=2">Next Task</a-button>
             </div>
 
-            <div class="step2" v-if="store.currentStep == 1 && featBitStore.flags['game-runner'] === true" style="margin-top:20px;margin-bottom: 5px;">
+            <div class="step2" 
+                 v-if="store.currentStep == 1 && featBitStore.flags['game-runner'] === true" 
+                 style="margin-top:20px;margin-bottom: 5px;">
                 <p style="font-size: 27px;margin-bottom:0px;">
                     <span style="color: yellow;font-weight: 600;margin-right: 10px;">Success !</span>
                     Dino Game was released. Look ↓↓↓↓↓↓ <br /> 

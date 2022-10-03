@@ -828,6 +828,7 @@
 
         restart: function () {
             if (!this.raqId) {
+                console.log('restart');
                 this.playCount++;
                 this.runningTime = 0;
                 this.playing = true;

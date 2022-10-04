@@ -17,11 +17,7 @@ export default {
     },
     watch: {
         difficulty: function (newVal, oldVal) { // watch it
-            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-
             const difficultyNumber = this.difficulty == 'hard' ? 26 : (this.difficulty === 'normal' ? 16 : 6)
-            console.log('this.difficulty: ' + difficultyNumber)
-            // this.runner.setSpeed(difficultyNumber)
             this.runner.config.SPEED = difficultyNumber
             this.runner.restart()
         }
@@ -56,7 +52,11 @@ export default {
 <template>
     <div id="dino-game-core" class="interstitial-wrapper">
         <div style="position:relative">
-            <h2 style="position: absolute;left:20px;top:20px;font-family:cursive;">Welcome to DINO GAME! Mode Level : {{difficulty}}</h2>
+            <h2 style="position: absolute;left:20px;top:20px;font-family:cursive;">Welcome to DINO GAME! Mode Level :
+                <strong style="text-transform:uppercase;"
+                    :style="{color:(difficulty === 'easy' ? 'green': (difficulty === 'normal' ? 'red' : 'blue'))}">{{difficulty}}</strong>
+            </h2>
+            <p style="position: absolute;left:20px;top:50px;font-family:cursive;">Press Space key to start the game</p>
         </div>
         <div id="main-content">
             <div class="icon icon-offline" alt=""></div>

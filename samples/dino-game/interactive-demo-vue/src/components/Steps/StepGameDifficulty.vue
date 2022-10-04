@@ -27,7 +27,7 @@ export default {
             <h1>Change Game Difficulty</h1>
         </div>
         <div class="steps">
-            <div class="step1" v-if="store.currentStep == 2">
+            <div >
                 <p>// Task 2: Change Difficulty Mode</p>
                 <p>The game launches in easy mode. You can use anothor flag to enable
                     'normal' mode or 'hard' mode.
@@ -43,10 +43,8 @@ export default {
                 <a-button @click="store.currentStep--">
                     Previous
                 </a-button>
-                <!-- <a-button v-if="store.currentStep < 3" style="margin-left: 8px" type="primary"
-                    @click="store.currentStep++">Next</a-button> -->
-                <a-button v-if="featBitStore.flags['difficulty-mode'] === 'hard'" type="primary" style="float:right;"
-                    @click="store.currentStep=2">Next Task</a-button>
+                <a-button v-if="featBitStore.flags['difficulty-mode'] !== 'easy'" type="primary" style="float:right;"
+                    @click="store.currentStep=3">Next Task</a-button>
             </div>
 
             <div v-if="featBitStore.flags['difficulty-mode'] !== 'easy'" 

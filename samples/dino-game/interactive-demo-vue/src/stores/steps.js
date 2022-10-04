@@ -11,7 +11,7 @@ export const useStepsStore = defineStore('steps', () => {
     const taskIndex = computed(() => {
         if (currentStep.value < 2)
             return 0;
-        else if (currentStep.value < 4)
+        else if (currentStep.value < 3)
             return 1;
         else
             return 2;

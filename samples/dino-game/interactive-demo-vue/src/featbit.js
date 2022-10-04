@@ -18,8 +18,11 @@ export const createFlagsProxy = () => {
 
 export const featBit = {
     install(app, options) {
+        console.log(window.location.search.substring(1));
+        let envkey = window.location.search.substring(1).replace('key=', ''); // http://localhost:5173?key=ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==
+        console.log(envkey);
         ffcClient.init({
-            secret: "ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==",
+            secret: envkey,
             user: {
                 id: 'my-user',
                 userName: 'my user',

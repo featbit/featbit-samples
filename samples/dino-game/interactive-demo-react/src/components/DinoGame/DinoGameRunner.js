@@ -361,6 +361,11 @@
             this.adjustDimensions();
             this.setSpeed();
 
+            let a = document.getElementsByClassName(Runner.classes.CONTAINER);
+            console.log(a.length);
+            if (a.length == 1)
+                return;
+                
             this.containerEl = document.createElement('div');
             this.containerEl.className = Runner.classes.CONTAINER;
 
@@ -684,7 +689,7 @@
                 if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] ||
                     e.type == Runner.events.TOUCHSTART)) {
                     if (!this.playing) {
-                        this.loadSounds();
+                        // this.loadSounds();
                         this.playing = true;
                         this.update();
                         if (window.errorPageController) {

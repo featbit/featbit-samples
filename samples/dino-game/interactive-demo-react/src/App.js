@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
+import { DinoGameCore } from './components/DinoGame/DinoGameCore';
 import './App.css';
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           </a>
         </span>
       </header>
+      <DinoGameCore />
     </div>
   );
 }

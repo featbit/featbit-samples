@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
-import { DinoGame } from './components/DinoGame/DinoGame';
+import { DinoGame } from './features/dinoGame/DinoGame';
+import { Guides } from './features/guides/Guides';
 import './App.css';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   })
   return (
     <div className="App">
+      <Guides />
       <DinoGame />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

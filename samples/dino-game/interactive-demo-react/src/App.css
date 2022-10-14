@@ -1,6 +1,14 @@
+@import '~antd/dist/antd.css';
+
+body {
+  overflow: auto !important;
+  height: auto !important;
+}
+
 .App {
   /* text-align: center; */
-  display:block
+  display: block;
+  padding-bottom: 20px;
 }
 
 .App-logo {
@@ -31,9 +39,11 @@
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(10px);
   }
+
   100% {
     transform: translateY(0px);
   }

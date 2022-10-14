@@ -362,7 +362,6 @@
             this.setSpeed();
 
             let a = document.getElementsByClassName(Runner.classes.CONTAINER);
-            console.log(a.length);
             if (a.length == 1)
                 return;
                 

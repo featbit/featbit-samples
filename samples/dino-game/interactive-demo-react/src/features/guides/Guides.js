@@ -9,6 +9,8 @@ import {
 import './Guides.css';
 import { Steps } from 'antd';
 import { StepReleaseDinoGame } from './components/StepReleaseDinoGame';
+import { StepGameDifficulty } from './components/StepGameDifficulty';
+import { StepComplete } from './components/StepComplete';
 const { Step } = Steps;
 
 export function Guides() {
@@ -23,10 +25,11 @@ export function Guides() {
         <Step title="Demo complete" />
       </Steps>
       <div className="steps-content">
-        <StepReleaseDinoGame  />
-        {/* <StepReleaseDinoGame v-if="store.taskIndex == 0" />
-            <StepGameDifficulty v-if="store.taskIndex == 1" />
-            <StepComplete v-if="store.taskIndex == 2" /> */}
+        {
+          currentStepIndex == 0 ?
+            <StepReleaseDinoGame /> : (currentStepIndex == 1 ?
+              <StepGameDifficulty /> : <StepComplete />)
+        }
       </div>
     </div>
   );

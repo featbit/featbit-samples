@@ -16,10 +16,16 @@ export const guidesSlice = createSlice({
     previous: (state) => {
       state.currentStep -= 1;
     },
+    toTask2: (state) => {
+      state.currentStep = 2;
+    },
+    toTask3: (state) => {
+      state.currentStep = 3;
+    }
   }
 });
 
-export const { next, previous } = guidesSlice.actions;
+export const { next, previous, toTask2, toTask3 } = guidesSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

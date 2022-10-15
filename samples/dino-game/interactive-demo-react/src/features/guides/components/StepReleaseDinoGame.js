@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     next,
     previous,
+    toTask2,
     currentStep,
 } from '../guidesSlice';
 import {
@@ -72,20 +73,23 @@ export function StepReleaseDinoGame() {
                     {
                         featureFlags['game-runner'] == true ?
                             <Button
-                                onClick={() => dispatch(next())}
+                                onClick={() => dispatch(toTask2())}
                                 type="primary" style={{ float: "right" }}>Next Task</Button> : null
                     }
 
                 </div>
 
-                <div className="step2"
-                    style={{ marginTop: "20px", marginBottom: "5px" }}>
-                    <p style={{ fontSize: "27px", marginBottom: "0px" }}>
-                        <span style={{ color: "yellow", fontWeight: "600", marginRight: "10px" }}>Success !</span>
-                        Dino Game was released. Look ↓↓↓↓↓↓ <br />
-                        Press space key to start the game
-                    </p>
-                </div>
+                {
+                    featureFlags['game-runner'] == true ?
+                        <div className="step2"
+                            style={{ marginTop: "20px", marginBottom: "5px" }}>
+                            <p style={{ fontSize: "27px", marginBottom: "0px" }}>
+                                <span style={{ color: "yellow", fontWeight: "600", marginRight: "10px" }}>Success !</span>
+                                Dino Game was released. Look ↓↓↓↓↓↓ <br />
+                                Press space key to start the game
+                            </p>
+                        </div> : null
+                }
             </div >
         </div >
     );

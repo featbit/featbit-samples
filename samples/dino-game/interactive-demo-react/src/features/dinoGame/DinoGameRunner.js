@@ -863,7 +863,7 @@
             document.body.classList.remove(Runner.classes.ARCADE_MODE);
             this.playing = false;
             this.activated = false;
-            this.stopListening();
+            // this.stopListening();
             // this.runner.clearCanvas();
             // this.runner.stop();
             // this.runner.invert(true);

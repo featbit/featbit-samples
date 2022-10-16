@@ -2,9 +2,29 @@ import React, { useState, useEffect } from 'react';
 import Runner from './DinoGameRunner.js';
 import './DinoGameCore.css';
 
-export function DinoGameCore() {
+export function DinoGameCore(props) {
+
+    let runner = null;
     useEffect(() => {
-        new Runner(".interstitial-wrapper", 6);
+        if (runner === null) {
+            const difficultyNumber = props.difficulty == 'hard' ? 26 : (props.difficulty === 'normal' ? 16 : 6)
+            runner = new Runner(".interstitial-wrapper", difficultyNumber);
+        }
+        else {
+            const difficultyNumber = props.difficulty == 'hard' ? 26 : (props.difficulty === 'normal' ? 16 : 6)
+            runner.config.SPEED = difficultyNumber
+            runner.restart()
+        }
+
+        return () => {
+            if (runner !== null) {
+                runner.clearArcadeMode();
+                // delete this.runner;
+                runner = null;
+                delete window['Runner'];
+                window['Runner'] = null;
+            }
+        }
     });
 
     return (
@@ -16,7 +36,7 @@ export function DinoGameCore() {
                     top: "20px",
                     fontFamily: "cursive"
                 }}>Welcome to DINO GAME! Mode Level :
-                    {/* <strong style="text-transform:uppercase;">{{ difficulty }}</strong> */}
+                    <strong style={{ textTransform: "uppercase" }}>{props.difficulty}</strong>
                 </h2>
                 <p style={{ position: "absolute", left: "20px", top: "50px", fontFamily: "cursive" }}>Press Space key to start the game</p>
             </div>

@@ -6,9 +6,7 @@ import {
     toTask2,
     currentStep,
 } from '../guidesSlice';
-import {
-    featBitFlags
-} from '../../../featBit/featBitSlice'
+import { featBitFlags } from '../../../featBit/featBitSlice'
 import { Button } from 'antd';
 import '../Guides.css';
 import TheFlagList from '../../../assets/imgs/the-flags-list.png'

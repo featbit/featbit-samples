@@ -38,7 +38,7 @@ export default {
                     <br/>
                     Note: The content completed in <a>Connect an SDK</a> will be used in most of the articles in How-to guides
                 </p>
-                <img src="@/assets/imgs/get-started-in-portal.png" />
+                <img src="@/assets/steps/get-started-in-portal.png" />
             </div>
             <div class="steps-action">
                 <a-button @click="store.currentStep--">

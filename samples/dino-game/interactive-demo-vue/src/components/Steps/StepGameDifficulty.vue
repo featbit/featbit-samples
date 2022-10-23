@@ -37,7 +37,7 @@ export default {
                     Find the 'Default rule' dropdown. Choose a flag variation (<strong>"hard"</strong> or
                     <strong>"normal"</strong> but not "easy") from the dropdown and save.
                 </p>
-                <img src="@/assets/imgs/ff-switch-difficulty.png" />
+                <img src="@/assets/steps/ff-switch-difficulty.png" />
             </div>
             <div class="steps-action">
                 <a-button @click="store.currentStep--">

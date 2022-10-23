@@ -44,11 +44,11 @@ export default {
                 <p>// Release Dino Game</p>
                 <p>Back to the flags list portal which contains "game-runner" feature flag.
                     Click on the name or detail link to go to the feature flag targeting page.</p>
-                <img src="@/assets/imgs/the-flags-list.png" />
+                <img src="@/assets/steps/the-flags-list.png" />
                 <p>Switch feature flag from Off to ON. The feature flag will serve variation "true"
                     to the Dino Game. It means the Dino Game (below) will be released immediately.
                 </p>
-                <img src="@/assets/imgs/ff-switch-on.png" />
+                <img src="@/assets/steps/ff-switch-on.png" />
             </div>
 
             <div class="steps-action">

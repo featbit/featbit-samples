@@ -34,3 +34,6 @@ This facilitates the usage of our feature flags. Every component can use feature
 
 `docker run -it -p 8080:80 --rm --name featbit-demo-dino-game-vue featbitdocker/demo-dino-game-vue`
 
+`docker push featbitdocker/demo-dino-game-vue:latest`
+
+`docker pull featbitdocker/demo-dino-game-vue:latest`

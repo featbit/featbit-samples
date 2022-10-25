@@ -9,16 +9,6 @@ export default {
     setup() {
         const featBitStore = useFeatBitStore();
 
-        // this.featBitStore.$subscribe((mutation, state) => {
-        //     if (this.featBitStore.flags["game-runner"] === true){
-        //         let div = document.getElementById('dino-game-core');
-        //         console.log(div);
-        //         new Runner(".interstitial-wrapper", difficulty == 'hard' ? 26 : (difficulty == 'normal' ? 16 : 6));
-        //         console.log('this.featBitStore.flags["game-runner"] === true');
-        //     }
-        // })
-
-
         return {
             featBitStore
         }

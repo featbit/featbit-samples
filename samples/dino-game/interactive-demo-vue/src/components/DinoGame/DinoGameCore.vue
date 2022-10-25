@@ -1,7 +1,5 @@
 <script>
 import Runner from './DinoGameRunner.js';
-import { ref, computed } from "vue";
-import { useFeatBitStore } from '@/featbit'
 
 export default {
     components: {

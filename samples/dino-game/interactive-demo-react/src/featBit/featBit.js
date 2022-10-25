@@ -41,6 +41,10 @@ export const FeatBit = (props) => {
                     "name": "subLevel",
                     "value": "Free"
                 },
+                {
+                    "name": "orgId",
+                    "value": "org0001"
+                },
             ]
         },
     });

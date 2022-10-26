@@ -29,8 +29,8 @@ export function StepGameDifficulty() {
                         'normal' mode or 'hard' mode.
                     </p>
                     <p>
-                        Back to the flag list, go to targeting page of feature flag "difficulty mode".
-                        Find the 'Default rule' dropdown. Choose a flag variation (<strong>"hard"</strong> or
+                        Back to the flag list, go to targeting page of feature flag "difficulty mode". Turn on the feature flag, and
+                        find the 'Default rule' dropdown. Choose a flag variation (<strong>"hard"</strong> or
                         <strong>"normal"</strong> but not "easy") from the dropdown and save.
                     </p>
                     <img src={FFSwitchDifficulty} />

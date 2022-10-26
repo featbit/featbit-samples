@@ -1,4 +1,4 @@
-import ffcClient from "ffc-js-client-side-sdk";
+import fbClient from "featbit-js-client-sdk";
 import { defineStore } from 'pinia'
 
 export const flagsDefaultValues = {
@@ -11,29 +11,22 @@ export const createFlagsProxy = () => {
     return new Proxy({}, {
         get(target, prop, receiver) {
             return (typeof prop === 'string' && !prop.startsWith('__v_')) ?
-                ffcClient.variation(prop, flagsDefaultValues[prop] || '') : '';
+                fbClient.variation(prop, flagsDefaultValues[prop] || '') : '';
         }
     })
 }
 
 export const featBit = {
     install(app, options) {
-        let envkey = window.location.search.substring(1).replace('key=', ''); // http://localhost:5173?key=ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==
-        
-        ffcClient.init({
+        let envkey = window.location.search.substring(1).replace('envKey=', '');
+
+        fbClient.init({
             secret: envkey,
+            api: "http://localhost:5100",
             user: {
-                id: 'my-user',
-                userName: 'my user',
+                keyId: 'my-user',
+                name: 'my user',
                 customizedProperties: [
-                    {
-                        "name": "kamar",
-                        "value": "100"
-                    },
-                    {
-                        "name": "Kamar",
-                        "value": "100"
-                    },
                     {
                         "name": "frequency",
                         "value": "3.5"
@@ -51,8 +44,10 @@ export const featBit = {
         });
         
         const store = useFeatBitStore()
-        ffcClient.on("ff_update", (changes) => changes.length ? store.flags = createFlagsProxy() : null);
-        ffcClient.waitUntilReady().then((changes) => changes.length ? store.flags = createFlagsProxy() : null);
+        
+        fbClient.on("ff_update", (changes) => changes.length ? store.flags = createFlagsProxy() : null);
+
+        fbClient.waitUntilReady().then((changes) => changes.length ? store.flags = createFlagsProxy() : null);
     }
 }
 

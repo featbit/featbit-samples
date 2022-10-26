@@ -1,6 +1,6 @@
-import ffcClient from 'ffc-js-client-side-sdk';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IFeatureFlag, IFeatureFlagChange, IOption, IVariationOption } from 'ffc-js-client-side-sdk/esm/types';
+
+import fbClient from 'ffc-js-client-side-sdk';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { flagsDefaultValues } from './featBit';
 
@@ -19,7 +19,7 @@ export const featBitSlice = createSlice({
                     if (typeof prop === 'symbol') {
                         return;
                     }
-                    return ffcClient.variation(prop, flagsDefaultValues[prop] || '');
+                    return fbClient.variation(prop, flagsDefaultValues[prop] || '');
                 }
             })
 

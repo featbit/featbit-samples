@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, store } from '../app/store';
-import ffcClient from "ffc-js-client-side-sdk";
-import {
-    updateFeatBitFlags,
-    featBitFlags,
-} from './featBitSlice';
+
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import fbClient from "featbit-js-client-sdk";
+import { updateFeatBitFlags } from './featBitSlice';
 
 
 export const flagsDefaultValues = {
@@ -13,26 +10,17 @@ export const flagsDefaultValues = {
     "difficulty-mode": "easy"
 }
 
-
 export const FeatBit = (props) => {
     const { children } = props;
+    let envkey = window.location.search.substring(1).replace('envKey=', ''); 
 
-    let envkey = window.location.search.substring(1).replace('key=', ''); // http://localhost:5173?key=ZTczLTFiMTctNCUyMDIyMDkyOTA1MDUwOV9fMTU5X18yMzVfXzQ1MV9fZGVmYXVsdF9lY2RjMA==
-
-    ffcClient.init({
+    fbClient.init({
         secret: envkey,
+        api: "http://localhost:5100",
         user: {
-            id: 'my-user',
-            userName: 'my user',
+            keyId: 'my-user',
+            name: 'my user',
             customizedProperties: [
-                {
-                    "name": "kamar",
-                    "value": "100"
-                },
-                {
-                    "name": "Kamar",
-                    "value": "100"
-                },
                 {
                     "name": "frequency",
                     "value": "3.5"
@@ -50,13 +38,13 @@ export const FeatBit = (props) => {
     });
 
     const dispatch = useDispatch();
-    ffcClient.on("ff_update", (changes) => {
-        return changes.length ? 
-                dispatch(updateFeatBitFlags({})) : null;
+
+    fbClient.on("ff_update", (changes) => {
+        return changes.length ?  dispatch(updateFeatBitFlags({})) : null;
     });
-    ffcClient.waitUntilReady().then((changes) => {
-        return changes.length ? 
-                dispatch(updateFeatBitFlags({})) : null;
+
+    fbClient.waitUntilReady().then((changes) => {
+        return changes.length ? dispatch(updateFeatBitFlags({})) : null;
     });
 
     return (

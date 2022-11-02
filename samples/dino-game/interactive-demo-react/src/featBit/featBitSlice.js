@@ -1,5 +1,5 @@
 
-import fbClient from 'ffc-js-client-side-sdk';
+import fbClient from 'featbit-js-client-sdk';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { flagsDefaultValues } from './featBit';

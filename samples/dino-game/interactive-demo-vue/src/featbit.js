@@ -18,11 +18,14 @@ export const createFlagsProxy = () => {
 
 export const featBit = {
     install(app, options) {
-        let envkey = window.location.search.substring(1).replace('envKey=', '');
-
+        const urlParams = new URLSearchParams(window.location.search);
+        let envkey = urlParams.get("envKey");
+        let evaluationUrl = urlParams.get("evaluationUrl");
+        console.log(envkey)
+        console.log(evaluationUrl)
         fbClient.init({
             secret: envkey,
-            api: "http://localhost:5100",
+            api: evaluationUrl,
             user: {
                 keyId: 'my-user',
                 name: 'my user',

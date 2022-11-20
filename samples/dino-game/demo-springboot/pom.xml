@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>co.featbit</groupId>
-    <artifactId>java-demo</artifactId>
+    <artifactId>demo-springboot</artifactId>
     <version>1.0.1</version>
 
     <properties>

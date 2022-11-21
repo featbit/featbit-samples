@@ -1,0 +1,13 @@
+logging:
+  level:
+    co:
+      featbit: INFO
+
+featbit:
+  spring:
+    streaming-url: ${fb-streaming-url}
+    event-url: ${fb-event-url}
+    env-secret: ${fb-env-secret}
+
+server:
+  port: ${fb-server-port:8080}

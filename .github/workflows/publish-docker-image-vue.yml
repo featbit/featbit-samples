@@ -16,9 +16,10 @@ env:
   APP: demo-dino-game-vue
 
 jobs:
-  build:
+  build-publish:
+    name: build and publish image to docker hub
     runs-on: ubuntu-latest
-
+    environment : Production
     steps:
       
       - name: Checkout
@@ -42,6 +43,8 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP }}:${{ env.VERSION_TAG }}
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP }}:${{ env.LATEST_TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
             
       - name: Inspect image
         run: |

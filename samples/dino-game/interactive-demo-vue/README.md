@@ -30,10 +30,10 @@ This facilitates the usage of our feature flags. Every component can use feature
 
 ## Docker
 
-`docker build -t featbitdocker/demo-dino-game-vue .`
+`docker build -t featbitdocker/demo-dino-game-vue:0.1.1 .`
 
 `docker run -it -p 8080:80 --rm --name featbit-demo-dino-game-vue featbitdocker/demo-dino-game-vue`
 
-`docker push featbitdocker/demo-dino-game-vue:latest`
+`docker push featbitdocker/demo-dino-game-vue:0.1.1`
 
 `docker pull featbitdocker/demo-dino-game-vue:latest`

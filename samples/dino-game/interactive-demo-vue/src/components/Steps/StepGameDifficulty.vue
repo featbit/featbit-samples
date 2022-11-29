@@ -33,10 +33,14 @@ export default {
                     'normal' mode or 'hard' mode.
                 </p>
                 <p>
-                    Back to the flag list, go to targeting page of feature flag "difficulty mode". Turn on the feature flag, and
-                    find the 'Default rule' dropdown. Choose a flag variation (<strong>"hard"</strong> or
-                    <strong>"normal"</strong> but not "easy") from the dropdown and save.
+                    Back to the flag list, go to targeting page of feature flag "difficulty mode". 
                 </p>
+                <ul>
+                    <li>1. Turn on the feature flag.</li>
+                    <li>2. In 'Default rule' section, choose a flag variation (<strong>"hard"</strong> or
+                    <strong>"normal"</strong> but not "easy") from the dropdown.</li>
+                    <li>3. Save the change of default rule.</li>
+                </ul>
                 <img src="@/assets/steps/ff-switch-difficulty.png" />
             </div>
             <div class="steps-action">

@@ -23,6 +23,15 @@ export default {
           
 <template>
     <div class="release-runner">
+        <a-alert type="info" style="margin-top:10px; margin-bottom: 10px;" show-icon>
+            <template #message>
+                <b>Prerequisites:</b>
+                You successfully created feature flags 'game runner' and 'difficulty
+                mode' in tutorial 
+                <a target="_blank" href='https://featbit.gitbook.io/docs/getting-started/2.-create-two-feature-flags'>Create 2
+                    flags for the demo</a>.</template>
+        </a-alert>
+
         <div class="title">
             <h1>Releasing Dino Game</h1>
         </div>
@@ -58,15 +67,14 @@ export default {
                 <a-button v-if="store.currentStep == 0" style="margin-right;: 8px" type="primary"
                     @click="store.currentStep++">Next</a-button>
                 <a-button v-if="featBitStore.flags['game-runner'] === true" type="primary" style="float:right;"
-                    @click="store.currentStep=2">Next Task</a-button>
+                    @click="store.currentStep = 2">Next Task</a-button>
             </div>
 
-            <div class="step2" 
-                 v-if="store.currentStep == 1 && featBitStore.flags['game-runner'] === true" 
-                 style="margin-top:20px;margin-bottom: 5px;">
+            <div class="step2" v-if="store.currentStep == 1 && featBitStore.flags['game-runner'] === true"
+                style="margin-top:20px;margin-bottom: 5px;">
                 <p style="font-size: 27px;margin-bottom:0px;">
                     <span style="color: yellow;font-weight: 600;margin-right: 10px;">Success !</span>
-                    Dino Game was released. Look ↓↓↓↓↓↓ <br /> 
+                    Dino Game was released. Look ↓↓↓↓↓↓ <br />
                     Press space key to start the game
                 </p>
             </div>

@@ -1,0 +1,4 @@
+fb-python-sdk
+flask
+flake8
+autopep8

@@ -7,23 +7,25 @@ import co.featbit.server.exterior.FBClient;
 
 import java.io.IOException;
 
+import static java.lang.Thread.sleep;
+
 public class JavaDemo {
-    public static void main(String[] args) throws IOException {
-        var envSecret = System.getProperty("fb-env-secret");
-        var streamUrl = System.getProperty("fb-streaming-url");
-        var eventUrl = System.getProperty("fb-event-url");
-        var user = System.getProperty("fb-user");
+    public static void main(String[] args) throws IOException, InterruptedException {
+        var envSecret = System.getProperty("FEATBIT_SAMPLE_ENV_SECRET");
+        var streamUrl = System.getProperty("FEATBIT_SAMPLE_EVENT_URL");
+        var eventUrl = System.getProperty("FEATBIT_SAMPLE_STREAMING_URL");
+        var user = System.getProperty("FEATBIT_SAMPLE_USER");
 
         FBConfig config = new FBConfig.Builder()
                 .eventURL(eventUrl)
                 .streamingURL(streamUrl)
                 .build();
-        var u = new FBUser.Builder(user)
+        FBUser u = new FBUser.Builder(user)
                 .userName(user)
                 .build();
         FBClient client = new FBClientImp(envSecret, config);
         if (client.isInitialized()) {
-            if (client.isEnabled("runner-game", u)) {
+            if (client.boolVariation("runner-game", u, false)) {
                 System.out.println(String.format("Dino Game is released to %s", u.getUserName()));
                 var difficulty = switch (client.variation("difficulty-mode", u, "normal")) {
                     case "hard" -> String.format("Dino Game is on hard mode for %s", u.getUserName());
@@ -35,6 +37,8 @@ public class JavaDemo {
                 System.out.println(String.format("Dino Game not released to %s", u.getUserName()));
             }
         }
+        // be sure to send events
+        sleep(5000);
         client.close();
         System.out.println("APP FINISHED");
     }

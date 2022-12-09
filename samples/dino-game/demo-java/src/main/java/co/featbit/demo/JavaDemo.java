@@ -11,10 +11,11 @@ import static java.lang.Thread.sleep;
 
 public class JavaDemo {
     public static void main(String[] args) throws IOException, InterruptedException {
-        var envSecret = System.getProperty("FEATBIT_SAMPLE_ENV_SECRET");
-        var streamUrl = System.getProperty("FEATBIT_SAMPLE_EVENT_URL");
-        var eventUrl = System.getProperty("FEATBIT_SAMPLE_STREAMING_URL");
-        var user = System.getProperty("FEATBIT_SAMPLE_USER");
+        var envVars = System.getenv();
+        var envSecret = envVars.get("FEATBIT_SAMPLE_ENV_SECRET");
+        var streamUrl = envVars.getOrDefault("FEATBIT_SAMPLE_EVENT_URL", "ws://localhost:5100");
+        var eventUrl = envVars.getOrDefault("FEATBIT_SAMPLE_STREAMING_URL", "http://localhost:5100");
+        var user = envVars.getOrDefault("FEATBIT_SAMPLE_USER", "test-user-1");
 
         FBConfig config = new FBConfig.Builder()
                 .eventURL(eventUrl)

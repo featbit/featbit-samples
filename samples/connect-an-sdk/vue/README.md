@@ -6,13 +6,13 @@ npm init vue@latest
 <img src='https://user-images.githubusercontent.com/68597908/208920573-0bd5a510-d732-4a7d-bda2-8315c2a6f9ad.png' width='668px' />
 
 b. Install project by running `npm install`.
+
 c. Install FeatBit javascript SDK
 
 ```
 npm install featbit-js-client-sdk
 ```
-d. Create a file `featbit.js` under folder `src`
-e. Copy code below into file `featbit.js`
+d. Create a file `featbit.js` under folder `src`, then copy code below into file `featbit.js`
 
 ```javascript
 import fbClient from "featbit-js-client-sdk";
@@ -59,13 +59,27 @@ export const featBit = {
 }
 ```
 
-f. Under folder `src/components/`, find file file `HelloWorld.vue`. Insert code below into file
+f. In file `main.js`, add featBit.
 
 ```javascript
+
+// import featBit install
+import { featBit } from './featbit'
+
+// use featBit to initialize
+app.use(featBit)
+```
+
+g. Under folder `src/components/`, find file file `HelloWorld.vue`. Insert code below into file
+
+```javascript
+// import featBit feature flags store
 import { useFeatBitStore } from '@/featbit'
 
+// fetch feature flags store in setup
 const featureStore = useFeatBitStore();
 
+// feature flag control if display connection message
 <h2 v-if="featureStore.flags['game-runner'] === true" 
     style="margin-top:30px;color:darkblue;">
     You connected to FeatBit !!!

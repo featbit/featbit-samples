@@ -1,17 +1,12 @@
-a. Create a basic vue project, and include Pinia in the project.
+a. Create a basic vue project, and includes Pinia in the project.
 
 ```
 npm init vue@latest
 ```
+<img src='https://user-images.githubusercontent.com/68597908/208920573-0bd5a510-d732-4a7d-bda2-8315c2a6f9ad.png' width='668px' />
 
-<img src='https://user-images.githubusercontent.com/68597908/208828931-3372945f-70c1-4c6a-b564-11400fdb70fb.png' width='668px' />
-
-b. Install and run project.
-c. Install pinia.
-```
-npm install pinia
-```
-d. Install FeatBit javascript SDK
+b. Install project by running `npm install`.
+c. Install FeatBit javascript SDK
 
 ```
 npm install featbit-js-client-sdk

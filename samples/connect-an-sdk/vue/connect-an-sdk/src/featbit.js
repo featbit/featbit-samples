@@ -1,25 +1,3 @@
-a. Create a basic vue project
-
-```
-npm init vue@latest
-```
-
-<img src='https://user-images.githubusercontent.com/68597908/208828931-3372945f-70c1-4c6a-b564-11400fdb70fb.png' width='668px' />
-
-b. Install and run project.
-c. Install pinia.
-```
-npm install pinia
-```
-d. Install FeatBit javascript SDK
-
-```
-npm install featbit-js-client-sdk
-```
-d. Create a file `featbit.js` under folder `src`
-e. Copy code below into file `featbit.js`
-
-```javascript
 import fbClient from "featbit-js-client-sdk";
 import { defineStore } from 'pinia'
 
@@ -62,9 +40,3 @@ export const useFeatBitStore = defineStore('featbit', {
         flags: () => createFlagsProxy()
     })
 })
-```
-
-
-> Steps above introduced a very basic usage of SDK which to test connection between SDK and server.
-> 
-> Check more usage with [documentation](https://featbit.gitbook.io/docs/getting-started/4.-connect-an-sdk/client-side-sdks-for-web-app#vue) and our [Dino Game demo](https://github.com/featbit/featbit-samples/tree/connectansdk/vue/samples/dino-game/interactive-demo-vue)

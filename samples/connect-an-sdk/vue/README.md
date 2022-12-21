@@ -37,7 +37,7 @@ const flagsProxy = () => {
 }
 
 export const useFeatBitStore = defineStore('featbit', {
-state: () => ({ flags: () => flagsProxy() })
+    state: () => ({ flags: () => flagsProxy() })
 })
 
 export const featBit = {
@@ -64,6 +64,18 @@ export const featBit = {
 }
 ```
 
+f. Under folder `src/components/`, find file file `HelloWorld.vue`. Insert code below into file
+
+```javascript
+import { useFeatBitStore } from '@/featbit'
+
+const featureStore = useFeatBitStore();
+
+<h2 v-if="featureStore.flags['game-runner'] === true" 
+    style="margin-top:30px;color:darkblue;">
+    You connected to FeatBit !!!
+</h2>
+```
 
 > Steps above introduced a very basic usage of SDK which to test connection between SDK and server.
 > 

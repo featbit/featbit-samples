@@ -23,16 +23,22 @@ e. Copy code below into file `featbit.js`
 import fbClient from "featbit-js-client-sdk";
 import { defineStore } from 'pinia'
 
-export const flagsDefaultValues = {}
+export const defaultFlags = {
+    "game-runner": false,
+}
 
-const createFlagsProxy = () => {
+const flagsProxy = () => {
     return new Proxy({}, {
         get(target, prop, receiver) {
             return (typeof prop === 'string' && !prop.startsWith('__v_')) ?
-                fbClient.variation(prop, flagsDefaultValues[prop] || '') : '';
+                fbClient.variation(prop, defaultFlags[prop] || '') : '';
         }
     })
 }
+
+export const useFeatBitStore = defineStore('featbit', {
+state: () => ({ flags: () => flagsProxy() })
+})
 
 export const featBit = {
     async install(app, options) {
@@ -50,18 +56,12 @@ export const featBit = {
                 ]
             },
         });
-        
-        const store = useFeatBitStore()
-        fbClient.waitUntilReady().then((changes) => changes.length ? store.flags = createFlagsProxy() : null);
-        fbClient.on("ff_update", (changes) => changes.length ? store.flags = createFlagsProxy() : null);
+
+        const fbS = useFeatBitStore()
+        fbClient.on('ready', (c) => c.length ? fbS.flags = flagsProxy() : null);
+        fbClient.on("ff_update", (c) => c.length ? fbS.flags = flagsProxy() : null);
     }
 }
-
-export const useFeatBitStore = defineStore('featbit', {
-    state: () => ({
-        flags: () => createFlagsProxy()
-    })
-})
 ```
 
 

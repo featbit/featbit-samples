@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "featbit-js-client-sdk": "^1.0.4",
     "pinia": "^2.0.28",
     "vue": "^3.2.45"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "connect-an-sdk",
+  "name": "connnect-an-sdk-vue",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "featbit-js-client-sdk": "^1.0.4",
     "pinia": "^2.0.28",
     "vue": "^3.2.45"
   },

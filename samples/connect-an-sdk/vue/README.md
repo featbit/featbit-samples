@@ -1,4 +1,4 @@
-a. Create a basic vue project
+a. Create a basic vue project, and include Pinia in the project.
 
 ```
 npm init vue@latest

@@ -21,11 +21,11 @@ export const useFeatBitStore = defineStore('featbit', {
 export const featBit = {
     async install(app, options) {
         fbClient.init({
-            secret: 'YLTN6P8iz0Ch9W2QYNfgng9K3OiGCqQEKhWG24GWnOrw',
+            secret: 'uZsYcDHE3EyB5UygUlugfwZ-sgT9f4-0G9dGYmhgUpng',
             api: 'http://localhost:5100',
             user: {
-                keyId: 'user-uuid-or-keyid-' + Date.now(),
-                name: 'Love FeatBit ' + Date.now(),
+                keyId: 'user-uuid-or-keyid',
+                name: 'Love FeatBit',
                 customizedProperties: [
                     {
                         "name": "email",

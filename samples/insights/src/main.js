@@ -9,7 +9,5 @@ import { featBit } from './featbit'
 const app = createApp(App)
 
 app.use(createPinia())
-
 app.use(featBit)
-
 app.mount('#app')

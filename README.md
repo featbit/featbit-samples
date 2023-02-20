@@ -5,6 +5,7 @@ This repo contains FeatBit demo for client and server side SDK:
 * [Java](./samples/dino-game/demo-java)
 * [SpringBoot](./samples/dino-game/demo-springboot)
 * [Python](./samples/dino-game/demo-python)
+* [Go](./samples/dino-game/demo-golang)
 
 
 

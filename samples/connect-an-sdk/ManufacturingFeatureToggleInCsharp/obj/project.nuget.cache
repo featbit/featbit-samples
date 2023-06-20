@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "O5jdvfGKzddv/2cJRHZmV47yP+zK0oQUhg84CxZDa01TOrWzgvTb/FqRDnzm1D/XfaiViLOBirgGuGPUy01UXg==",
+  "success": true,
+  "projectFilePath": "C:\\Code\\featbit\\featbit-samples\\samples\\connect-an-sdk\\ManufacturingFeatureToggleInCsharp\\ManufacturingFeatureToggleInCsharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hu-be\\.nuget\\packages\\featbit.serversdk\\1.1.2-alpha\\featbit.serversdk.1.1.2-alpha.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\6.0.0\\microsoft.extensions.hosting.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\system.io.pipelines\\6.0.0\\system.io.pipelines.6.0.0.nupkg.sha512",
+    "C:\\Users\\hu-be\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

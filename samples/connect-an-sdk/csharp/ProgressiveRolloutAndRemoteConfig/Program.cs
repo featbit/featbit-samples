@@ -79,6 +79,6 @@ public class Functions
 
 
         var jsonVariation = fbClient.StringVariation("feature-config", user, defaultValue: "{}");
-        Console.WriteLine($"first-feature-flag for customer A: {jsonVariation}");
+        Console.WriteLine($"feature-config for customer A: {jsonVariation}");
     }
 }

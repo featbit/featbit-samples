@@ -6,9 +6,9 @@ namespace OpenTelemetryApm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SportsController : ControllerBase
+    public class VideosController : ControllerBase
     {
-        public SportsController() 
+        public VideosController() 
         { 
         }
 
@@ -26,24 +26,12 @@ namespace OpenTelemetryApm.Controllers
         [HttpPost("GetSportsByCity")]
         public async Task<List<Sport>> GetSportsByCity()
         {
+            Task.Delay((new Random()).Next(10, 50)).Wait();
             using var client = new HttpClient();
 
-            int cityId = (new Random()).Next(810503, 1092001);
-
-            var result = await client.GetAsync($"http://localhost:5260/api/Sports/GetSportsByCity/{cityId}");
+            var result = await client.GetAsync("http://localhost:5260/WeatherForecast");
 
             return new List<Sport>() { };
         }
-
-
-        [HttpPost("GetSportsByCityWithoutBug")]
-        public async Task<List<Sport>> GetSportsByCityWithoutBug()
-        {
-            Task.Delay((new Random()).Next(200, 350)).Wait();
-            using var client = new HttpClient();
-
-            return new List<Sport>() { };
-        }
-
     }
 }

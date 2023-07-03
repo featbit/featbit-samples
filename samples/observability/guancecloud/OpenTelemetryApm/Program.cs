@@ -1,45 +1,28 @@
-using System.Diagnostics;
-using FeatBit.Sdk.Server;
-using FeatBit.Sdk.Server.Options;
+using FeatBit.Sdk.Server.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetryApm;
-using OpenTelemetry.Logs;
-using FeatBit.Sdk.Server.DependencyInjection;
-using System.Reflection.PortableExecutable;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetryApm.Options;
+using StackExchange.Redis;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddSingleton<Instrumentation>();
-
-string openTelemetryServiceName = "OpenTelemetryAPM";
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(builder => builder
-        .AddService(serviceName: openTelemetryServiceName))
-    .WithTracing(builder => builder
-        .AddSource(Instrumentation.ActivitySourceName)
-        .AddAspNetCoreInstrumentation()
-        .AddConsoleExporter()
-        .AddOtlpExporter())
-    .WithMetrics(builder => builder
-        .AddAspNetCoreInstrumentation()
-        .AddConsoleExporter()
-        .AddOtlpExporter());
-
-
-//var connectionString = builder.Configuration.GetConnectionString("AppDb");
 builder.Services.AddDbContext<OldDbContext>();
+builder.Services.AddDbContext<NewAzureSqlDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NewAzureSqlDbConnection")));
 
 var logger = LoggerFactory.Create(builder =>
 {
@@ -52,6 +35,37 @@ var logger = LoggerFactory.Create(builder =>
     });
 }).CreateLogger("Program");
 
+builder.Services.Configure<AzureOptions>(
+    builder.Configuration.GetSection(AzureOptions.Position));
+
+string redisCacheConnectionString = builder.Configuration.GetSection("Azure:RedisCache:ConnectionString")?.Value ?? "";
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisCacheConnectionString;
+    options.InstanceName = builder.Configuration.GetSection("Azure:RedisCache:OpenTelemetryAPMInstance")?.Value ?? "";
+});
+
+
+builder.Services.AddSingleton<Instrumentation>();
+
+string openTelemetryServiceName = "OpenTelemetryAPM";
+ConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisCacheConnectionString);
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(builder => builder
+        .AddService(serviceName: openTelemetryServiceName))
+    .WithTracing(builder => builder
+        .AddSource(Instrumentation.ActivitySourceName)
+        .AddAspNetCoreInstrumentation()
+        .AddSqlClientInstrumentation()
+        .AddRedisInstrumentation(redisConnectionMultiplexer)
+        .AddGrpcClientInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddConsoleExporter()
+        .AddOtlpExporter())
+    .WithMetrics(builder => builder
+        .AddAspNetCoreInstrumentation()
+        .AddConsoleExporter()
+        .AddOtlpExporter());
 
 builder.Services.AddFeatBit(options =>
 {
@@ -60,8 +74,6 @@ builder.Services.AddFeatBit(options =>
     options.StreamingUri = new Uri("wss://featbit-tio-eu-eval.azurewebsites.net");
     options.EventUri = new Uri("https://featbit-tio-eu-eval.azurewebsites.net");
 });
-
-
 
 var app = builder.Build();
 
@@ -77,6 +89,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
 
 app.Run();
 

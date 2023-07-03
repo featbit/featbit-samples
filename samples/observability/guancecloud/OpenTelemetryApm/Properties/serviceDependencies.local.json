@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/eastus/connectors/KestrelCertificatesDevelopmentPassword_BB9695F3C1",
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/featbit-bestpractice/databases/featbit-bestpractice",
+      "type": "mssql.azure",
+      "connectionId": "Kestrel:Certificates:Development:Password",
+      "dynamicId": null
+    }
+  }
+}

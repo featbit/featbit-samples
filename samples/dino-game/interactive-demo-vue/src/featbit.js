@@ -14,7 +14,10 @@ export const createFlagsProxy = () => {
             var returnValue =
                 (typeof prop === 'string' && !prop.startsWith('__v_')) ?
                     fbClient.variation(prop, flagsDefaultValues[prop] || '') : '';
-            console.log(`featbit: ${typeof prop === 'string' ? prop : ''} = ${returnValue}`)
+            if(typeof prop === 'string'){
+                console.log(`featbit: ${typeof prop === 'string' ? prop : ''} = ${returnValue}`)
+                datadogRum.addFeatureFlagEvaluation(prop, returnValue);
+            }
             return returnValue;
         }
     })
@@ -29,12 +32,17 @@ export const featBit = {
         let evaluationUrl = 'http://localhost:5100';
         console.log(envkey)
         console.log(evaluationUrl)
+
+        let userSimluateIndex = Date.now();
+        let userId = "simluation-user-id-" + userSimluateIndex;
+        let userName = "user name " + userSimluateIndex;
+        
         fbClient.init({
             secret: envkey,
             api: evaluationUrl,
             user: {
-                keyId: 'my-user',
-                name: 'my user',
+                keyId: userId,
+                name: userName,
                 customizedProperties: [
                     {
                         "name": "frequency",
@@ -58,7 +66,10 @@ export const featBit = {
 
         fbClient.waitUntilReady().then((changes) => changes.length ? store.flags = createFlagsProxy() : null);
 
-
+        datadogRum.setUser({
+            id: userId,
+            name: userName
+        })
         datadogRum.init({
             applicationId: 'ef15baa3-3d4c-4c9f-843e-4ad92bcd6b4e',
             clientToken: 'pubb317bf6eb6d87f8cbab78c9299391288',
@@ -72,7 +83,8 @@ export const featBit = {
             trackUserInteractions: true,
             trackResources: true,
             trackLongTasks: true,
-            defaultPrivacyLevel:'mask-user-input'
+            defaultPrivacyLevel:'mask-user-input',
+            enableExperimentalFeatures: ["feature_flags"],
         });
             
         datadogRum.startSessionReplayRecording();

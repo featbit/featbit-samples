@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.50.1",
     "ant-design-vue": "^3.2.12",
     "featbit-js-client-sdk": "^1.0.4",
     "pinia": "^2.0.22",

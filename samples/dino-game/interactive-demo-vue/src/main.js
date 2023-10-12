@@ -8,5 +8,6 @@ const pinia = createPinia()
 
 const app = createApp(App)
 app.use(pinia)
+console.log(`featbit init`);
 app.use(featBit)
 app.mount('#app');

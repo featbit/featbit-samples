@@ -16,29 +16,29 @@ do
 
     using var client = new HttpClient();
 
-    if(ii < 1500)
-    {
-        var result = await client.PostAsync($"http://localhost:5260/api/Sports/GetSportsByCityWithoutBug", null);
-        Task.Delay((new Random()).Next(20, 200)).Wait();
-    }
-    else
-    {
+    //if(ii < 1500)
+    //{
+    //    var result = await client.PostAsync($"http://localhost:5260/api/Sports/GetSportsByCityWithoutBug", null);
+    //    Task.Delay((new Random()).Next(20, 200)).Wait();
+    //}
+    //else
+    //{
         var result = await client.PostAsync($"http://localhost:5260/api/Sports/GetSportsByCity", null);
         Task.Delay((new Random()).Next(50, 600)).Wait();
-    }
+    //}
 
 
-    Console.WriteLine($"{ii.ToString()}");
+    //Console.WriteLine($"{ii.ToString()}");
 
-    ii++;
-    if (ii > 2000)
+    //ii++;
+    //if (ii > 2000)
         break;
 }
 while (true);
 
 return;
 
-    for (int i = 0; i < sessionNumber; i++)
+for (int i = 0; i < sessionNumber; i++)
 {
 
     FTWrapper.Install("{\"serverUrl\":\"" + dataKitUrl + "\",\"envType\":\"production\",\"serviceName\":\"Your Services\",\"globalContext\":{\"appName\":\"Feature Flags Demo\"}}");

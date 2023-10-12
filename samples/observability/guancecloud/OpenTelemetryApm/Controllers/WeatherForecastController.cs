@@ -10,6 +10,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace OpenTelemetryApm.Controllers
 {
@@ -52,64 +53,66 @@ namespace OpenTelemetryApm.Controllers
             _logger.LogInformation("WeatherForecastController:Get");
 
 
-            //var user = FbUser.Builder("user-key-00000000000001").Name("user-00000000000001").Build();
+            var user = FbUser.Builder("user-key-00000000000001").Name("user-00000000000001").Build();
 
 
-            //var tasks = new List<Task>();
-            //tasks.Add(Task.Run(() => {
+            var tasks = new List<Task>();
+            tasks.Add(Task.Run(() =>
+            {
 
-            //    if (_fbClient.BoolVariation("read-sport-olddb", user, true) == true)
-            //    {
-            //        using (var activity = this.activitySource.StartActivity("FeatBit/read-sport-olddb/true"))
-            //        {
-            //            using (var sqlActivity = this.activitySource.StartActivity("Sqlite Query: Get Sports by City From Old Database"))
-            //            {
-            //                Task.Delay((new Random()).Next(200, 300)).Wait();
-            //                //var sports = _oldDbContext.Sports.ToList();
-            //                //activity?.SetStatus(ActivityStatusCode.Error);
-            //            }
-            //        }
-            //    }
-            //}));
+                if (_fbClient.BoolVariation("read-sport-olddb", user, true) == true)
+                {
+                    using (var activity = this.activitySource.StartActivity("FeatBit/read-sport-olddb/true"))
+                    {
+                        using (var sqlActivity = this.activitySource.StartActivity("mssql"))
+                        {
+                            Task.Delay((new Random()).Next(200, 300)).Wait();
+                            //var sports = _oldDbContext.Sports.ToList();
+                            //activity?.SetStatus(ActivityStatusCode.Error);
+                        }
+                    }
+                }
+            }));
 
-            //tasks.Add(Task.Run(() => {
-            //    if (_fbClient.BoolVariation("read-sport-newdb", user, true) == true)
-            //    {
-            //        using (var activity = this.activitySource.StartActivity("FeatBit/read-sport-newdb/true"))
-            //        {
-            //            using (var sqlActivity = this.activitySource.StartActivity("Sqlite Query: Get Sports by City From New Database"))
-            //            {
-            //                var delay = (new Random()).Next(200, 500);
-            //                Task.Delay(delay).Wait();
-            //                //if(delay > 300)
-            //                //{
-            //                    Task.Delay((new Random()).Next(300, 500)).Wait();
-            //                    var span = Tracer.CurrentSpan;
-            //                    span.SetAttribute("error_type", $"Sql Query Error: Query to new Database Timeout when getting sports by city from new database");
-            //                    sqlActivity?.SetStatus(ActivityStatusCode.Error, "Query to new Database Timeout");
-            //                //}
-            //                //else
-            //                //{
-            //                //    Task.Delay((new Random()).Next(200, 300)).Wait();
-            //                //    //var sports = _oldDbContext.Sports.ToList();
-            //                //}
-            //            }
-            //        }
-            //    }
-            //}));
-            //await Task.WhenAll(tasks);
+            tasks.Add(Task.Run(() =>
+            {
+                if (_fbClient.BoolVariation("read-sport-newdb", user, true) == true)
+                {
+                    using (var activity = this.activitySource.StartActivity("FeatBit/read-sport-newdb/true"))
+                    {
+                        using (var sqlActivity = this.activitySource.StartActivity("Sql Query: Get Sports by City From New Database"))
+                        {
+                            var delay = (new Random()).Next(200, 500);
+                            Task.Delay(delay).Wait();
+                            //if(delay > 300)
+                            //{
+                            Task.Delay((new Random()).Next(300, 500)).Wait();
+                            var span = Tracer.CurrentSpan;
+                            span.SetAttribute("error_type", $"Sql Query Error: Query to new Database Timeout when getting sports by city from new database");
+                            sqlActivity?.SetStatus(ActivityStatusCode.Error, "Query to new Database Timeout");
+                            //}
+                            //else
+                            //{
+                            //    Task.Delay((new Random()).Next(200, 300)).Wait();
+                            //    //var sports = _oldDbContext.Sports.ToList();
+                            //}
+                        }
+                    }
+                }
+            }));
+            await Task.WhenAll(tasks);
 
-            //// https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Api#introduction-to-opentelemetry-net-tracing-api
-            //using (var activity = this.activitySource.StartActivity("Http Post Demo"))
-            //{
-            //    activity?.SetTag("http.method", "POST");
-            //    if (activity != null && activity.IsAllDataRequested == true)
-            //    {
-            //        activity.SetTag("http.url", "http://www.mywebsite.com");
-            //    }
+            // https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Api#introduction-to-opentelemetry-net-tracing-api
+            using (var activity = this.activitySource.StartActivity("Http Post Demo"))
+            {
+                activity?.SetTag("http.method", "POST");
+                if (activity != null && activity.IsAllDataRequested == true)
+                {
+                    activity.SetTag("http.url", "http://www.mywebsite.com");
+                }
 
-            //    activity?.AddEvent(new ActivityEvent("sample activity event."));
-            //}
+                activity?.AddEvent(new ActivityEvent("sample activity event."));
+            }
 
             var sports = await _newDbContext.Sports.Where(p => p.Name != null).ToListAsync();
 

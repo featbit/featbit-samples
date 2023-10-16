@@ -1,0 +1,51 @@
+{
+  "profiles": {
+    "AspNetCoreApmWithFeatureFlag": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CORECLR_ENABLE_PROFILING": "1",
+        "CORECLR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
+        "DD_INSTRUMENTATION_TELEMETRY_ENABLED": "true",
+        "DD_TRACE_ENABLED": "true",
+        "DD_ENV": "demo",
+        "DD_SERVICE": "aspnetcoreapmwithfeatureflag",
+        "DD_VERSION": "1.0.0",
+        "DD_TRACE_AGENT_URL": "http://localhost:8126",
+        "DD_AGENT_HOST": "localhost",
+        "DD_TRACE_AGENT_PORT": "8126"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7180;http://localhost:5121"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://+:443;http://+:80"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:26791",
+      "sslPort": 44371
+    }
+  }
+}

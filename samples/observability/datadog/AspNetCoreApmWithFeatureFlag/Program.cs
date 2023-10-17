@@ -12,9 +12,9 @@ builder.Services.AddSwaggerGen();
 // add FeatBit service
 builder.Services.AddFeatBit(options =>
 {
-    options.EventUri = new Uri("https://featbit-tio-eu-eval.azurewebsites.net");
-    options.StreamingUri = new Uri("wss://featbit-tio-eu-eval.azurewebsites.net");
-    options.EnvSecret = "lhl3wj0Ek0OXorUNT20cYQ3zSJhPUPg0mRr59x9t_NSg";
+    options.EventUri = new Uri("http://localhost:5100");
+    options.StreamingUri = new Uri("ws://localhost:5100");
+    options.EnvSecret = "gvkuIffZRkWoXWM-VumvsAJGumzSi8qUeo7MWeDXG0jQ";
     options.StartWaitTime = TimeSpan.FromSeconds(3);
 });
 

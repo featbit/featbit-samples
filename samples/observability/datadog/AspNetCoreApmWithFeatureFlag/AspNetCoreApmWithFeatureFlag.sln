@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreApmWithFeatureFlag", "AspNetCoreApmWithFeatureFlag.csproj", "{917F7DB3-95C7-42C0-8DFA-BC57DC02C391}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitWeatherForecast", "FeatBitWeatherForecast.csproj", "{917F7DB3-95C7-42C0-8DFA-BC57DC02C391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBitWeatherForecastCaller", "..\FeatBitWeatherForecastCaller\FeatBitWeatherForecastCaller.csproj", "{EFEE80C0-0A59-4734-A811-41E5653CADB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{917F7DB3-95C7-42C0-8DFA-BC57DC02C391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{917F7DB3-95C7-42C0-8DFA-BC57DC02C391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{917F7DB3-95C7-42C0-8DFA-BC57DC02C391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEE80C0-0A59-4734-A811-41E5653CADB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEE80C0-0A59-4734-A811-41E5653CADB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEE80C0-0A59-4734-A811-41E5653CADB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEE80C0-0A59-4734-A811-41E5653CADB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

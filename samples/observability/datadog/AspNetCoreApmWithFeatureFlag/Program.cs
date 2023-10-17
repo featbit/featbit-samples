@@ -1,18 +1,6 @@
-using Datadog.Trace;
-using Datadog.Trace.Configuration;
-using Microsoft.Extensions.Logging;
+using FeatBit.Sdk.Server.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//// Create a settings object using the existing
-//// environment variables and config sources
-//var settings = TracerSettings.FromDefaultSources();
-
-//// Override a value
-//settings.GlobalTags.Add("env", "demo");
-
-//// Replace the tracer configuration
-//Tracer.Configure(settings);
 
 // Add services to the container.
 
@@ -20,6 +8,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// add FeatBit service
+builder.Services.AddFeatBit(options =>
+{
+    options.EventUri = new Uri("https://featbit-tio-eu-eval.azurewebsites.net");
+    options.StreamingUri = new Uri("wss://featbit-tio-eu-eval.azurewebsites.net");
+    options.EnvSecret = "lhl3wj0Ek0OXorUNT20cYQ3zSJhPUPg0mRr59x9t_NSg";
+    options.StartWaitTime = TimeSpan.FromSeconds(3);
+});
 
 var app = builder.Build();
 

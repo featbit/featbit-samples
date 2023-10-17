@@ -11,7 +11,7 @@
         "DD_INSTRUMENTATION_TELEMETRY_ENABLED": "true",
         "DD_TRACE_ENABLED": "true",
         "DD_ENV": "demo",
-        "DD_SERVICE": "aspnetcoreapmwithfeatureflag",
+        "DD_SERVICE": "featbit-weather-forecast",
         "DD_VERSION": "1.0.0",
         "DD_TRACE_AGENT_URL": "http://localhost:8126",
         "DD_AGENT_HOST": "localhost",

@@ -1,5 +1,5 @@
+using FeatBit.Sdk.Server;
 using Microsoft.AspNetCore.Mvc;
-using Datadog.Trace;
 
 namespace AspNetCoreApmWithFeatureFlag.Controllers
 {
@@ -7,30 +7,24 @@ namespace AspNetCoreApmWithFeatureFlag.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly IFbClient _fbClient;
+
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IFbClient fbClient)
         {
             _logger = logger;
+            _fbClient = fbClient;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            int r = (new Random()).Next(1, 5);
-            if (r == 6)
-            {
-                throw new Exception("Fake Exception to Test");
-            }
-            //// Start a new span
-            //using (var scope = Tracer.Instance.StartActive("custom-operation"))
-            //{
-            //}
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

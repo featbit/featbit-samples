@@ -1,0 +1,14 @@
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.AssemblyInfoInputs.cache
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.AssemblyInfo.cs
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.csproj.CoreCompileInputs.cache
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\bin\Debug\net6.0\FeatBitWeatherForecastCaller.exe
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\bin\Debug\net6.0\FeatBitWeatherForecastCaller.deps.json
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\bin\Debug\net6.0\FeatBitWeatherForecastCaller.runtimeconfig.json
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\bin\Debug\net6.0\FeatBitWeatherForecastCaller.dll
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\bin\Debug\net6.0\FeatBitWeatherForecastCaller.pdb
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.dll
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\refint\FeatBitWeatherForecastCaller.dll
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.pdb
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\FeatBitWeatherForecastCaller.genruntimeconfig.cache
+C:\Code\featbit\featbit-samples\samples\observability\datadog\FeatBitWeatherForecastCaller\obj\Debug\net6.0\ref\FeatBitWeatherForecastCaller.dll

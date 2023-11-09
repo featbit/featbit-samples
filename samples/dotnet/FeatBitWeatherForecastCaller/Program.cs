@@ -7,21 +7,25 @@ Console.WriteLine("Hello, World!");
 
 //await WriteDataDogAPMSimulationAsync();
 
-const string flagKey = "abnumerictest";
+//const string flagKey = "abnumerictest";
 
 //await ABTestConversionTestAsync(flagKey, "ab-test-conversion-test-hit");
-await ABTestNumericTestAsync(flagKey, "ab-test-numeric-test-hit");
+//await ABTestNumericTestAsync(flagKey, "ab-test-numeric-test-2");
+
+const string flagKey = "abctest";
+await ABTestConversionTestAsync(flagKey, "evt-cnv", 3);
+//await ABTestNumericTestAsync(flagKey, "evt-dig");
 
 
-async Task ABTestConversionTestAsync(string flagKey, string metricName)
+async Task ABTestConversionTestAsync(string flagKey, string metricName, int variations = 2)
 {
     FbClient client = NewFbClient();
 
     while (true)
     {
-        var roundRandom = (new Random()).Next(2, 10);
-        int v2Round = 0;
-        for(int i = 0; i < roundRandom; i++)
+        var roundRandom = (new Random()).Next(10, 30);
+        int v2Round = 0, c = 0, t1 = 0, t2 = 0;
+        for (int i = 0; i < roundRandom; i++)
         {
             // create a user
             var userRandomGuid = Guid.NewGuid();
@@ -29,29 +33,67 @@ async Task ABTestConversionTestAsync(string flagKey, string metricName)
             var userName = $"abnumerictest-name-{userRandomGuid}";
             var user = FbUser.Builder(userKey).Name(userName).Build();
 
-            // evaluate a boolean flag for a given user with evaluation detail
-            var versionToUse = client.StringVariation(flagKey, user, defaultValue: "off");
-
-            if (versionToUse == "v1")
+            if (variations == 2)
             {
-                var hitRandom = (new Random()).Next(0, 50);
-                if (hitRandom % 3 == 0 || hitRandom % 5 == 0)
+                // evaluate a boolean flag for a given user with evaluation detail
+                var variation = client.BoolVariation(flagKey, user);
+
+                if (variation == false)
                 {
-                    client.Track(user, metricName);
+                    var hitRandom = (new Random()).Next(0, 50);
+                    if (hitRandom % 3 == 0 || hitRandom % 5 == 0)
+                    {
+                        client.Track(user, metricName);
+                    }
+                }
+                else
+                {
+                    v2Round++;
+                    var hitRandom = (new Random()).Next(0, 100);
+                    if (hitRandom % 3 == 0 || hitRandom % 4 == 0 || hitRandom % 5 == 0 || hitRandom % 6 == 0)
+                    {
+                        client.Track(user, metricName);
+                    }
                 }
             }
-            else if (versionToUse == "v2")
+            else if(variations == 3)
             {
-                v2Round++;
-                var hitRandom = (new Random()).Next(0, 100);
-                if (hitRandom % 3 == 0 || hitRandom % 5 == 0 || hitRandom % 4 == 0 || hitRandom % 6 == 0)
+                var variation = client.StringVariation(flagKey, user, "c");
+
+                if (variation == "c")
                 {
-                    client.Track(user, metricName);
+                    c++;
+                    var hitRandom = (new Random()).Next(0, 50);
+                    if (hitRandom % 3 == 0 || hitRandom % 5 == 0)
+                    {
+                        client.Track(user, metricName);
+                    }
+                }
+                else if (variation == "t1")
+                {
+                    t1++;
+                    var hitRandom = (new Random()).Next(0, 100);
+                    if (hitRandom % 3 == 0 || hitRandom % 4 == 0 || hitRandom % 5 == 0)
+                    {
+                        client.Track(user, metricName);
+                    }
+                }
+                else if (variation == "t2")
+                {
+                    t2++;
+                    var hitRandom = (new Random()).Next(0, 100);
+                    if (hitRandom % 3 == 0 || hitRandom % 4 == 0 || hitRandom % 5 == 0 || hitRandom % 6 == 0)
+                    {
+                        client.Track(user, metricName);
+                    }
                 }
             }
         }
 
-        Console.WriteLine($"{v2Round}/{roundRandom} are v2");
+        if (variations == 2)
+            Console.WriteLine($"Experiment/Controlled: {v2Round}/{roundRandom-v2Round}");
+        else if (variations == 3)
+            Console.WriteLine($"C/T1/T2: {c}/{t1}/{t2}");
         await Task.Delay(1000);
     }
 
@@ -76,18 +118,18 @@ async Task ABTestNumericTestAsync(string flagKey, string metricName)
             var user = FbUser.Builder(userKey).Name(userName).Build();
 
             // evaluate a boolean flag for a given user with evaluation detail
-            var versionToUse = client.StringVariation(flagKey, user, defaultValue: "off");
+            var versionToUse = client.BoolVariation(flagKey, user);
 
-            if (versionToUse == "v1")
+            if (versionToUse == false)
             {
                 var hitRandom = (new Random()).Next(1, 3);
                 for (int j = 0; j < hitRandom; j++)
                 {
-                    var errorRandom = (new Random()).Next(20, 50);
+                    var errorRandom = (new Random()).Next(3, 40);
                     client.Track(user, metricName, errorRandom);
                 }
             }
-            else if (versionToUse == "v2")
+            else
             {
                 v2Round++;
                 var hitRandom = (new Random()).Next(1, 3);
@@ -99,7 +141,7 @@ async Task ABTestNumericTestAsync(string flagKey, string metricName)
             }
         }
 
-        Console.WriteLine($"{v2Round}/{roundRandom} are v2");
+        Console.WriteLine($"Experiment/Controlled: {v2Round}/{roundRandom - v2Round}");
 
         await Task.Delay(1000);
     }
@@ -150,7 +192,7 @@ async Task WriteDataDogAPMSimulationAsync()
 static FbClient NewFbClient()
 {
     // setup sdk options
-    var options = new FbOptionsBuilder("gvkuIffZRkWoXWM-VumvsAJGumzSi8qUeo7MWeDXG0jQ")
+    var options = new FbOptionsBuilder("ZtVbXh-Z8EeiUYzrMRXXbAFpMBrbbPSUyvVZ2pHH_8rA")
         .Event(new Uri("http://localhost:5100"))
         .Streaming(new Uri("ws://localhost:5100"))
         .Build();

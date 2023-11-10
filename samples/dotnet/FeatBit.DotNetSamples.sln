@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitWeatherForecast", "FeatBitWeatherForecast\FeatBitWeatherForecast.csproj", "{DAEC2376-3F6C-41B5-B464-A22E9AC4A4FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitWeatherForecastCaller", "FeatBitWeatherForecastCaller\FeatBitWeatherForecastCaller.csproj", "{D2638964-BB97-415A-987B-A338070822C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitWeatherForecastDataDogIntegrationCaller", "FeatBitWeatherForecastCaller\FeatBitWeatherForecastDataDogIntegrationCaller.csproj", "{D2638964-BB97-415A-987B-A338070822C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgressiveRolloutAndRemoteConfig", "ProgressiveRolloutAndRemoteConfig\ProgressiveRolloutAndRemoteConfig.csproj", "{5D486795-7C8E-49D9-9669-C4B06DE65225}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatsigIntegration", "Stats
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitNewRelicOneIntegrationDocker", "FeatBitNewRelicOneIntegrationDocker\FeatBitNewRelicOneIntegrationDocker.csproj", "{A5E70E6C-4533-4594-B0EB-DF46E6E01295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBitNewRelicOneIntegrationCaller", "FeatBitNewRelicOneIntegrationCaller\FeatBitNewRelicOneIntegrationCaller.csproj", "{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitNewRelicOneIntegrationCaller", "FeatBitNewRelicOneIntegrationCaller\FeatBitNewRelicOneIntegrationCaller.csproj", "{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBitExperimentationTester", "FeatBitWeatherForecastABTestCaller\FeatBitExperimentationTester.csproj", "{CF2F3495-F20F-4DBE-AA90-91EEED205905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF2F3495-F20F-4DBE-AA90-91EEED205905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2F3495-F20F-4DBE-AA90-91EEED205905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2F3495-F20F-4DBE-AA90-91EEED205905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2F3495-F20F-4DBE-AA90-91EEED205905}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

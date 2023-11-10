@@ -47,13 +47,8 @@ namespace AspNetCoreApmWithFeatureFlag.Controllers
 
         [HttpGet]
         [Route("pm10/{userKey}")]
-        public string PM10(string userKey)
+        public string PM10(string userKey = "123")
         {
-            var user = FbUser.Builder($"user-{userKey}").Name($"name-{userKey}").Build();
-            if (_fbClient.StringVariation("air-quality-pm10-algo", user, "regression") == "metnet")
-            {
-                return $"{userKey}: MetNet";
-            }
             return $"{userKey}: Regression";
         }
 
@@ -61,10 +56,6 @@ namespace AspNetCoreApmWithFeatureFlag.Controllers
         [Route("pm2p5")]
         public string PM2p5()
         {
-            if (_fbClient.StringVariation("air-quality-pm2p5-algo", FbTrafficUser(), "regression") == "metnet")
-            {
-                throw new Exception("PM2p5 Algorithm Metnet is failure");
-            }
             return "PM2p5 Good";
         }
 

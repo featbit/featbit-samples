@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgressiveRolloutAndRemote
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatsigIntegration", "StatsigIntegration\StatsigIntegration.csproj", "{9DFAE7E4-9C53-40FB-9F5F-3D63520B2949}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitNewRelicOneIntegration", "NewRelicOneIntegration\FeatBitNewRelicOneIntegration.csproj", "{81A5BD56-A78A-4489-B37B-230595E0F529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBitNewRelicOneIntegrationDocker", "FeatBitNewRelicOneIntegrationDocker\FeatBitNewRelicOneIntegrationDocker.csproj", "{A5E70E6C-4533-4594-B0EB-DF46E6E01295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBitNewRelicOneIntegrationDocker", "FeatBitNewRelicOneIntegrationDocker\FeatBitNewRelicOneIntegrationDocker.csproj", "{A5E70E6C-4533-4594-B0EB-DF46E6E01295}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBitNewRelicOneIntegrationCaller", "FeatBitNewRelicOneIntegrationCaller\FeatBitNewRelicOneIntegrationCaller.csproj", "{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{9DFAE7E4-9C53-40FB-9F5F-3D63520B2949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DFAE7E4-9C53-40FB-9F5F-3D63520B2949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DFAE7E4-9C53-40FB-9F5F-3D63520B2949}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81A5BD56-A78A-4489-B37B-230595E0F529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81A5BD56-A78A-4489-B37B-230595E0F529}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81A5BD56-A78A-4489-B37B-230595E0F529}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81A5BD56-A78A-4489-B37B-230595E0F529}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5E70E6C-4533-4594-B0EB-DF46E6E01295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5E70E6C-4533-4594-B0EB-DF46E6E01295}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E70E6C-4533-4594-B0EB-DF46E6E01295}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E70E6C-4533-4594-B0EB-DF46E6E01295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF3AED9-6401-4F61-8E2E-4A6148D796F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

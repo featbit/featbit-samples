@@ -12,8 +12,8 @@ Console.WriteLine("Hello, World!");
 //await ABTestConversionTestAsync(flagKey, "ab-test-conversion-test-hit");
 //await ABTestNumericTestAsync(flagKey, "ab-test-numeric-test-2");
 
-const string flagKey = "abctest";
-await ABTestConversionTestAsync(flagKey, "evt-cnv", 3);
+//const string flagKey = "abctest";
+//await ABTestConversionTestAsync(flagKey, "evt-cnv", 3);
 //await ABTestNumericTestAsync(flagKey, "evt-dig");
 
 

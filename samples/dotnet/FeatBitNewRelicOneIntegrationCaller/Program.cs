@@ -7,7 +7,7 @@ await WriteNewRelicAPMSimulationAsync();
 
 async Task WriteNewRelicAPMSimulationAsync()
 {
-    var apiRoute = "http://localhost:32771";
+    var apiRoute = "https://localhost:32768";
 
     List<string> apiNodes = new List<string>() {
         "api/AirQuality/so2",
@@ -36,6 +36,7 @@ async Task WriteNewRelicAPMSimulationAsync()
                 else
                     errorCall++;
             }
+            await Task.Delay((new Random()).Next(1000, 3000));
         }
         Console.WriteLine($"Total Call: {totalCall}; Error Call: {errorCall}");
 

@@ -14,7 +14,7 @@ builder.Services.AddFeatBit(options =>
 {
     options.EventUri = new Uri("https://featbit-tio-eu-eval.azurewebsites.net");
     options.StreamingUri = new Uri("wss://featbit-tio-eu-eval.azurewebsites.net");
-    options.EnvSecret = "######lhl3wj0Ek0OXorUNT20cYQ3zSJhPUPg0mRr59x9t_NSg";
+    options.EnvSecret = "######l0mRr59x9t_NSg";
     options.StartWaitTime = TimeSpan.FromSeconds(3);
 });
 

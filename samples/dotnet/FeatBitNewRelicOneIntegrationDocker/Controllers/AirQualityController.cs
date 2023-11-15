@@ -24,6 +24,8 @@ namespace AspNetCoreApmWithFeatureFlag.Controllers
         {
             if (_fbClient.StringVariation("air-quality-so2-algo", FbTrafficUser(), "regression") == "metnet")
             {
+                //Task.Delay(1);
+                for (int i = 0; i < 99; i++) ;
                 throw new Exception("SO2 Algorithm Metnet is failure");
             }
             return "SO2 Good";

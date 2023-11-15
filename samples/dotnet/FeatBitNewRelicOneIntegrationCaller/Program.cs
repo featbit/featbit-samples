@@ -7,7 +7,7 @@ await WriteNewRelicAPMSimulationAsync();
 
 async Task WriteNewRelicAPMSimulationAsync()
 {
-    var apiRoute = "https://localhost:32768";
+    var apiRoute = "http://localhost:32769";
 
     List<string> apiNodes = new List<string>() {
         "api/AirQuality/so2",

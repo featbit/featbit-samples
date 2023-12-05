@@ -1,17 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Net;
 
-Console.WriteLine("Console APP for generating DataDog APM simulation data");
+Console.WriteLine("Hello, World!");
 
-await WriteDataDogAPMSimulationAsync();
+await WriteNewRelicAPMSimulationAsync();
 
-async Task WriteDataDogAPMSimulationAsync()
+async Task WriteNewRelicAPMSimulationAsync()
 {
-    var apiRoute = "https://localhost:7180";
+    var apiRoute = "http://localhost:32769";
 
     List<string> apiNodes = new List<string>() {
         "api/AirQuality/so2",
         "api/AirQuality/no2",
-        "api/AirQuality/pm10",
+        //"api/AirQuality/pm10",
         "api/AirQuality/pm2p5",
         "api/RainForecast",
         "WeatherForecast",
@@ -25,7 +26,7 @@ async Task WriteDataDogAPMSimulationAsync()
         foreach (var apiNode in apiNodes)
         {
             HttpClient client = new HttpClient();
-            int numberOfCall = (new Random()).Next(3, 10);
+            int numberOfCall = (new Random()).Next(1, 3);
             for (int i = 0; i < numberOfCall; i++)
             {
                 totalCall++;
@@ -35,9 +36,10 @@ async Task WriteDataDogAPMSimulationAsync()
                 else
                     errorCall++;
             }
+            await Task.Delay((new Random()).Next(1000, 3000));
         }
         Console.WriteLine($"Total Call: {totalCall}; Error Call: {errorCall}");
 
-        await Task.Delay((new Random()).Next(1000, 3000));
+        await Task.Delay((new Random()).Next(3000, 5000));
     }
 }

@@ -1,0 +1,47 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CORECLR_ENABLE_PROFILING": "1",
+        "CORECLR_PROFILER": "{36032161-FFC0-4B61-B559-F6C5D41BAE5A}",
+        "CORECLR_PROFILER_PATH": "C:\\Code\\featbit\\featbit-samples\\samples\\dotnet\\NewRelicOneIntegration\\bin\\Debug\\net7.0\\newrelic\\NewRelic.Profiler.dll",
+        "CORECLR_NEWRELIC_HOME": "C:\\Code\\featbit\\featbit-samples\\samples\\dotnet\\NewRelicOneIntegration\\bin\\Debug\\net7.0\\newrelic",
+        "NEW_RELIC_LICENSE_KEY": "2fb3c37c7554db3fa55c2224c4ab7fbaFFFFNRAL",
+        "NEW_RELIC_APP_NAME": "FeatBitNewRelicOneIntegration"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5032"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7207;http://localhost:5032"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:36779",
+      "sslPort": 44366
+    }
+  }
+}

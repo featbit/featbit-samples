@@ -1,4 +1,4 @@
-const fb = require('@featbit/node-server-sdk');
+import fb from '@featbit/node-server-sdk';
 
 const t = fb.init({"sdkKey": "abc"});
 

@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "@featbit/node-server-sdk": "file:../../../featbit-node-server-sdk"
   },
   "devDependencies": {
-    "@types/node": "^20.10.1"
+    "@types/node": "^20.10.1",
+    "tsx": "^4.6.2"
   }
 }

@@ -1,0 +1,19 @@
+﻿@page "/"
+@inject IFbClient FeatureFlags
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<FeatureFlag FlagKey="hello-world">
+    <h2>FeatBit Hello World Demo</h2>
+</FeatureFlag>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+}

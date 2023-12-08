@@ -2,7 +2,7 @@
 @using FeatBit.Sdk.Server.Model
 @inject IFbClient FeatureFlags
 
-@if (showChildContent == true)
+@if (FeatureFlags.FeatureReleased(FlagKey) == true)
 {
     @ChildContent
 }
@@ -13,16 +13,9 @@
     public RenderFragment? ChildContent { get; set; }
     [Parameter]
     public string FlagKey { get; set; }
-    [Parameter]
-    public bool DefaultValue { get; set; }
-
-    private bool showChildContent;
 
     protected override async Task OnInitializedAsync()
     {
-        var user = FbUser.Builder("anonymous").Build();
-        showChildContent = FeatureFlags.BoolVariation(FlagKey, user, defaultValue: false);
-
         await base.OnInitializedAsync();
     }
 }

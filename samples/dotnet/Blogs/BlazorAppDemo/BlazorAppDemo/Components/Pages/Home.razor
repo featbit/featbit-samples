@@ -1,17 +1,41 @@
 ﻿@page "/"
+
 @inject IFbClient FeatureFlags
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+@if (FeatureFlags.FeatureReleased("welcom-sentence"))
+{
+    <h5>
+        Welcome to our website! We're thrilled to have you here and can't
+        wait to share our journey with you.
+    </h5>
+}
 
-<FeatureFlag FlagKey="hello-world">
-    <h2>FeatBit Hello World Demo</h2>
+<br/>
+
+<FeatureFlag FlagKey="welcom-sentence">
+    <h5>
+        Welcome to our website! We're thrilled to have you here and can't
+        wait to share our journey with you.
+    </h5>
 </FeatureFlag>
 
+<br />
+
+@if (FeatureFlags.FeatureReleased("welcom-sentence", HttpContext.User.Identity?.Name))
+{
+    <h5>
+        Welcome @HttpContext.User.Identity?.Name to our website!
+    </h5>
+}
+
 @code{
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();

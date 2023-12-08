@@ -16,7 +16,6 @@ namespace BlazorAppDemo.Controllers
             _fbClient = fbClient;
         }
 
-        //[FeatureFlags(["weather-page"])]
         [HttpGet]
         [Route("BoolVariation")]
         public bool BoolVariation(string flagKey)

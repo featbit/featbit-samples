@@ -20,7 +20,7 @@
 
     private async Task OnNavigateAsync(NavigationContext context)
     {
-        if (!FeatureFlags.PageAllowAccess(context.Path, HttpContext.User.Identity?.Name))
-            Navigation.NavigateTo("/Error");
+        // if (!FeatureFlags.PageAllowAccess(context.Path, HttpContext.User.Identity?.Name))
+        //     Navigation.NavigateTo("/Error");
     }
 }

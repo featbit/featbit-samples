@@ -13,7 +13,7 @@ namespace BlazorAppDemo.FeatureFlags
 
         public static bool PageAllowAccess(this IFbClient fbClient, string path, string userId = null)
         {
-            FbUser fbUser = FbUser.Builder(userId ?? Guid.NewGuid().ToString()).Build();
+            FbUser fbUser = FbUser.Builder(userId ?? Guid.NewGuid().ToString()).Custom("Route-Path", path).Build();
             return fbClient.BoolVariation("route-navigation", fbUser, false);
         }
     }

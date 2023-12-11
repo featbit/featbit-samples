@@ -43,7 +43,7 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 // add FeatBit service
 builder.Services.AddFeatBit(options =>
 {
-    options.EnvSecret = "lhl3wj0Ek0OXorUNT20cYQ3zSJhPUPg0mRr59x9t_NSg";
+    options.EnvSecret = "lhl3wj0Ek0OXor******UPg0mRr59x9t_NSg";
     options.StreamingUri = new Uri("wss://featbit-tio-eu-eval.azurewebsites.net");
     options.EventUri = new Uri("https://featbit-tio-eu-eval.azurewebsites.net");
     options.StartWaitTime = TimeSpan.FromSeconds(3);

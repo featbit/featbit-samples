@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager Navigation
+@inject IFbClient FeatureFlags
+
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly }"
+        OnNavigateAsync="@OnNavigateAsync">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+            <NotAuthorized>
+                <RedirectToLogin />
+            </NotAuthorized>
+        </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+
+@code {
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    private async Task OnNavigateAsync(NavigationContext context)
+    {
+        // if (!FeatureFlags.PageAllowAccess(context.Path, HttpContext.User.Identity?.Name))
+        //     Navigation.NavigateTo("/Error");
+    }
+}

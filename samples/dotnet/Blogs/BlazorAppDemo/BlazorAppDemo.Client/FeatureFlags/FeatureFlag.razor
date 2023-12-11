@@ -1,0 +1,24 @@
+﻿@inject HttpClient Http
+
+@if (showChildContent == true)
+{
+    @ChildContent
+}
+
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public string FlagKey { get; set; }
+
+    private bool showChildContent;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // var result = await Http.GetStringAsync($"https://localhost:7209/api/FeatureFlagsForWasm/BoolVariation?flagKey={FlagKey}");
+        var result = await Http.GetStringAsync($"api/FeatureFlagsForWasm/BoolVariation?flagKey={FlagKey}");
+
+        showChildContent = result.ToUpper() == "TRUE" ? true : false;
+    }
+}

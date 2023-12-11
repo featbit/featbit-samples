@@ -1,0 +1,21 @@
+﻿@using FeatBit.Sdk.Server
+@using FeatBit.Sdk.Server.Model
+@inject IFbClient FeatureFlags
+
+@if (FeatureFlags.FeatureReleased(FlagKey) == true)
+{
+    @ChildContent
+}
+
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public string FlagKey { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+}

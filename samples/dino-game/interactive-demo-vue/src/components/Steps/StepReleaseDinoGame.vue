@@ -28,7 +28,7 @@ export default {
                 <b>Prerequisites:</b>
                 You successfully created feature flags 'game runner' and 'difficulty
                 mode' in tutorial 
-                <a target="_blank" href='https://featbit.gitbook.io/docs/getting-started/2.-create-two-feature-flags'>Create 2
+                <a target="_blank" href='https://docs.featbit.co/getting-started/create-two-feature-flags'>Create 2
                     flags for the demo</a>.</template>
         </a-alert>
 

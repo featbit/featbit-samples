@@ -88,4 +88,4 @@ const featureStore = useFeatBitStore();
 
 > Steps above introduced a very basic usage of SDK which to test connection between SDK and server.
 > 
-> Check more usage with [documentation](https://featbit.gitbook.io/docs/getting-started/4.-connect-an-sdk/client-side-sdks-for-web-app#vue) and our [Dino Game demo](https://github.com/featbit/featbit-samples/tree/connectansdk/vue/samples/dino-game/interactive-demo-vue)
+> Check more usage with [documentation](https://github.com/featbit/featbit-js-client-sdk?tab=readme-ov-file) and our [Dino Game demo](https://github.com/featbit/featbit-samples/tree/connectansdk/vue/samples/dino-game/interactive-demo-vue)

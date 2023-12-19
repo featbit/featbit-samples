@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport", "FeatBit.DataExport.csproj", "{3D3AE548-4E95-423E-8767-6D0FEEFC346F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.CHToSegment", "..\FeatBit.DataExport.CHToSegment\FeatBit.DataExport.CHToSegment.csproj", "{EA388B0B-F5E0-40F0-9234-80F115EF894E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D3AE548-4E95-423E-8767-6D0FEEFC346F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3AE548-4E95-423E-8767-6D0FEEFC346F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3AE548-4E95-423E-8767-6D0FEEFC346F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3AE548-4E95-423E-8767-6D0FEEFC346F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA388B0B-F5E0-40F0-9234-80F115EF894E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA388B0B-F5E0-40F0-9234-80F115EF894E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA388B0B-F5E0-40F0-9234-80F115EF894E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA388B0B-F5E0-40F0-9234-80F115EF894E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F626134D-1BCC-4966-B49A-58BBA0070B9B}
+	EndGlobalSection
+EndGlobal

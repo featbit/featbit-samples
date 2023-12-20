@@ -15,5 +15,8 @@ namespace FeatBit.DataExport
 
         [Option('c', "conn", Required = true, HelpText = "Please input connection string")]
         public string ConnectionString { get; set; }
+
+        [Option('d', "destination", Required = true, HelpText = "Please input a destination")]
+        public string Destination { get; set; }
     }
 }

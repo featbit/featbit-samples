@@ -1,7 +1,7 @@
 ﻿using Segment.Analytics;
 using Segment.Analytics.Policies;
 
-namespace FeatBit.DataExport.CHToSegment
+namespace FeatBit.DataExport.Destination.Segment
 {
     public class NetworkErrorHandler : IAnalyticsErrorHandler
     {

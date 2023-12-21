@@ -5,11 +5,13 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport", "FeatBit.DataExport.csproj", "{3D3AE548-4E95-423E-8767-6D0FEEFC346F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.ClickHouse", "..\FeatBit.DataExport.ReadFromClickHouse\FeatBit.DataExport.ClickHouse.csproj", "{0335DC69-C8AD-4D32-B796-1BB74C3B49AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.ClickHouse", "..\FeatBit.DataExport.ReadFromClickHouse\FeatBit.DataExport.ClickHouse.csproj", "{0335DC69-C8AD-4D32-B796-1BB74C3B49AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.Models", "..\FeatBit.DataExport.Models\FeatBit.DataExport.Models.csproj", "{33D5865A-63B7-4AAC-BDE1-47867952076B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Models", "..\FeatBit.DataExport.Models\FeatBit.DataExport.Models.csproj", "{33D5865A-63B7-4AAC-BDE1-47867952076B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.Destination.Segment", "..\FeatBit.DataExport.Destination.Segment\FeatBit.DataExport.Destination.Segment.csproj", "{13666868-E27B-465C-AEFE-1C379A98DD61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Destination.Segment", "..\FeatBit.DataExport.Destination.Segment\FeatBit.DataExport.Destination.Segment.csproj", "{13666868-E27B-465C-AEFE-1C379A98DD61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.Destination.AzureEventHub", "..\FeatBit.DataExport.Destination.AzureEventHub\FeatBit.DataExport.Destination.AzureEventHub.csproj", "{D545B589-5309-4E1A-97A7-A0696B6CCECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{13666868-E27B-465C-AEFE-1C379A98DD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13666868-E27B-465C-AEFE-1C379A98DD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13666868-E27B-465C-AEFE-1C379A98DD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

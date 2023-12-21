@@ -6,18 +6,20 @@ namespace FeatBit.DataExport
     {
         public static bool ParseParameters(string[] args, ParamOptions options)
         {
+            //Console.WriteLine(String.Join(';', args));
             Parser.Default
                     .ParseArguments<ParamOptions>(args)
                     .WithParsed<ParamOptions>(o =>
                     {
-                        if (!string.IsNullOrWhiteSpace(o.EnvId))
-                        {
-                            options.EnvId = o.EnvId;
-                        }
-                        if (!string.IsNullOrWhiteSpace(o.TimeStamp))
-                        {
-                            options.TimeStamp = o.TimeStamp;
-                        }
+                        options.EnvId = o.EnvId;
+                        options.TimeStamp = o.TimeStamp;
+                        options.SourceConnectionString = o.SourceConnectionString;
+                        options.QueryInterval = o.QueryInterval;
+                        options.BigInterval = o.BigInterval == 0 ? 30 : o.BigInterval;
+
+                        options.SegmentConnectionString = o.SegmentConnectionString;
+                        options.AzureEventHubConnectionString = o.AzureEventHubConnectionString;
+
                         if (o.PageSize != null)
                         {
                             if (o.PageSize > 0)
@@ -30,7 +32,7 @@ namespace FeatBit.DataExport
                             }
                         }
                     });
-            if (!string.IsNullOrWhiteSpace(options.ConnectionString) &&
+            if (!string.IsNullOrWhiteSpace(options.SourceConnectionString) &&
                 !string.IsNullOrWhiteSpace(options.TimeStamp) &&
                 !string.IsNullOrWhiteSpace(options.EnvId) &&
                 options.PageSize > 0)

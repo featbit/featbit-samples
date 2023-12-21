@@ -7,7 +7,7 @@ namespace FeatBit.DataExport.ClickHouse
     {
         public static async Task<List<FlagValueEvent>> RetrieveFlagValueEventsAsync(ParamOptions options)
         {
-            using (var connection = new ClickHouseConnection(options.ConnectionString))
+            using (var connection = new ClickHouseConnection(options.SourceConnectionString))
             {
                 string sql = "SELECT " +
                              "  uuid as Id, " +

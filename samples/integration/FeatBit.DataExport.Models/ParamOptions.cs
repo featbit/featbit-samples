@@ -4,19 +4,28 @@ namespace FeatBit.DataExport
 {
     public class ParamOptions
     {
-        [Option('e', "env", Required = true, HelpText = "Please input env id")]
+        [Option('e', "env", Required = true, HelpText = "Environment where you want to query ")]
         public string EnvId { get; set; }
 
-        [Option('t', "timestamp", Required = true, HelpText = "Please input timestamp")]
+        [Option('t', "timestamp", Required = true, HelpText = "TimeStamp you want the query start with")]
         public string TimeStamp { get; set; }
+
+        [Option('c', "conn", Required = true, HelpText = "Source Connection String to ClickHouse or MongoDB")]
+        public string SourceConnectionString { get; set; }
+
+        [Option('g', "segment", Required = false, HelpText = "Segment Connection String, example: WriteKey=NUc5S2Jl*****xOVN1eGhLQ29T**1SamRHWm4=;Host=https://api.segment.io")]
+        public string SegmentConnectionString { get; set; }
+
+        [Option('a', "azevthub", Required = false, HelpText = "Azure Event Hub Connection String, example: ")]
+        public string AzureEventHubConnectionString { get; set; }
 
         [Option('s', "size", Required = false, HelpText = "Page size should be greater than 0")]
         public int? PageSize { get; set; }
 
-        [Option('c', "conn", Required = true, HelpText = "Please input connection string")]
-        public string ConnectionString { get; set; }
+        [Option('i', "queryinterval", Required = false, HelpText = "Interval (milliseconds) between each query to FeatBit's ClickHouse or MongoDB")]
+        public int QueryInterval { get; set; }
 
-        [Option('d', "destination", Required = true, HelpText = "Please input a destination")]
-        public string Destination { get; set; }
+        [Option('b', "biginterval", Required = false, HelpText = "Interval (seconds) to next query if no items return from the query")]
+        public int BigInterval { get; set; }
     }
 }

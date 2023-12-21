@@ -12,11 +12,14 @@ namespace FeatBit.DataExport.Destination.Segment
     {
         [JsonPropertyName("event")]
         public string Event { get; set; }
+        //[JsonPropertyName("timestamp")]
+        //public DateTime SegmentTimeStamp { get; set; }
 
         public TrackModel(FlagValueEvent evt, string eventName = "Feature Flag Evaluation Event")
         {
             CopyFromFlagValueEvent(evt);
             Event = eventName;
+            //SegmentTimeStamp = evt.Timestamp;
         }
 
         public void CopyFromFlagValueEvent(FlagValueEvent evt)

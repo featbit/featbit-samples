@@ -13,6 +13,7 @@ namespace FeatBit.DataExport
         public string VariationId { get; set; }
         public string DistinctId { get; set; }
         public string EventName { get; set; }
+        public string CustomEventName { get; set; }
         public double NumericValue { get; set; }
         public string ApplicationType { get; set; }
         public DateTime CHTimestamp { get; set; }

@@ -57,7 +57,7 @@ namespace FeatBit.DataExport.ClickHouse
                              "  JSONExtract(JSONExtract(properties, 'user', 'String'), 'keyId', 'String')  as UserId, " +
                              "  JSONExtract(JSONExtract(properties, 'user', 'String'), 'name', 'String')  as Username, " +
                              "  JSONExtract(properties, 'route', 'String') as Route,    " +
-                             "  JSONExtract(properties, 'eventName', 'String') as EventName,    " +
+                             "  JSONExtract(properties, 'eventName', 'String') as CustomEventName,    " +
                              "  JSONExtract(properties, 'numericValue', ' Float32') as NumericValue,   " +
                              "  JSONExtract(properties, 'applicationType', ' String') as ApplicationType,   " +
                              "  JSONExtract(properties, 'projectId', 'String') as ProjectId, " +
@@ -70,7 +70,7 @@ namespace FeatBit.DataExport.ClickHouse
                              "  events " +
                              $"WHERE " +
                             $"  timestamp > '{options.TimeStamp}' AND " +
-                            $"  event = 'FlagValue' AND " +
+                            $"  event = 'CustomEvent' AND " +
                             $"  env_id = '{options.EnvId}' " +
                              "ORDER BY timestamp " +
                             $"LIMIT {options.PageSize} ";

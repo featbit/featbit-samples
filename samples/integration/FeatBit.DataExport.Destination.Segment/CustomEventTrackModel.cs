@@ -1,28 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace FeatBit.DataExport.Destination.Segment
 {
-    public class TrackModel: FlagValueEvent
+    public class CustomEventTrackModel : CustomEvent
     {
         [JsonPropertyName("event")]
         public string Event { get; set; }
-        //[JsonPropertyName("timestamp")]
-        //public DateTime SegmentTimeStamp { get; set; }
 
-        public TrackModel(FlagValueEvent evt, string eventName = "Feature Flag Evaluation Event")
+        public CustomEventTrackModel(CustomEvent evt, string eventName = "FeatBit Custom Event")
         {
-            CopyFromFlagValueEvent(evt);
+            CopyFromCustomEvent(evt);
             Event = eventName;
-            //SegmentTimeStamp = evt.Timestamp;
         }
 
-        public void CopyFromFlagValueEvent(FlagValueEvent evt)
+        public void CopyFromCustomEvent(CustomEvent evt)
         {
             this.Id = evt.Id;
             this.UserId = evt.UserId;
@@ -31,13 +22,13 @@ namespace FeatBit.DataExport.Destination.Segment
             this.VariationId = evt.VariationId;
             this.DistinctId = evt.DistinctId;
             this.EventName = evt.EventName;
+            this.CustomEventName = evt.CustomEventName;
             this.CHTimestamp = evt.CHTimestamp;
             this.Route = evt.Route;
-            this.FeatureFlagId = evt.FeatureFlagId;
+            this.ApplicationType = evt.ApplicationType;
             this.AccountId = evt.AccountId;
             this.ProjectId = evt.ProjectId;
-            this.FeatureFlagKey = evt.FeatureFlagKey;
-            this.SendToExperiment = evt.SendToExperiment;
+            this.NumericValue = evt.NumericValue;
             this.Username = evt.Username;
             this.Tag0 = evt.Tag0;
             this.Tag1 = evt.Tag1;

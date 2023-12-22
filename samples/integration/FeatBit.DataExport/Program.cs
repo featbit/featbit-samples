@@ -1,4 +1,6 @@
-﻿using FeatBit.DataExport;
+﻿// -e "32f6be54-6796-44dd-bc82-f4824b0da13c" -t "2023-12-12 07:41:51.288" -c "Host=127.0.0.1;Protocol=http;Port=8123;Database=featbit" -g "WriteKey=NUc5S2JlSGRqc3ExOVN1eGhLQ29TdjJMVW1SamRHWm4=;Host=https://api.segment.io" -s 1000 -i 100 -b 5 -a "Endpoint=sb://featbitexportdata.servicebus.windows.net/;SharedAccessKeyName=flagvalueevents;SharedAccessKey=Q0sXMCyF3TqUcYLUYz/kUnGu1wAbjeRnB+AEhJIzHhU=" --azevthubplan "Basic" --azevthubname "flagvaluecapture" --eventtype "CustomEvent"
+
+using FeatBit.DataExport;
 using FeatBit.DataExport.ClickHouse;
 using FeatBit.DataExport.Destination.AzureEventHub;
 using FeatBit.DataExport.Destination.Segment;
@@ -23,7 +25,6 @@ else
     Console.WriteLine($"Invalid Parameters");
 }
 
-
 Console.WriteLine($"Press any key to exit...");
 Console.ReadKey();
 
@@ -31,8 +32,9 @@ Console.ReadKey();
 async Task ExportFlagValueEventsAsync(ParamOptions parameters, AzureEventHubWriter azEvtHubService, SegmentWriter segmentService)
 {
     // test propose only
-    ReaderTester azEvtHubTester = new (parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
-    await azEvtHubTester.ReadAsync();
+    //FlagValueEventReaderTester azEvtHubTester = new (parameters.AzureEventHubConnectionString);
+    //await azEvtHubTester.ReadAsync();
+    //return;
 
     long totalSentEvent = 0;
     while (true)
@@ -75,47 +77,52 @@ async Task ExportFlagValueEventsAsync(ParamOptions parameters, AzureEventHubWrit
 
 async Task ExportCustomEventEventsAsync(ParamOptions parameters, AzureEventHubWriter azEvtHubService, SegmentWriter segmentService)
 {
-    // test propose only
-    ReaderTester azEvtHubTester = new(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
-    await azEvtHubTester.ReadAsync();
+    //Test propose only, Please keep the code
+    //CustomEventReaderTester azEvtHubTester = new(parameters.AzureEventHubConnectionString);
+    //await azEvtHubTester.ReadAsync();
+    //return;
 
     long totalSentEvent = 0;
     while (true)
     {
-        Console.WriteLine($"Retriving FlagValue top " +
+        Console.WriteLine($"Retriving CustomEvent top " +
                           $"{parameters.PageSize} events after " +
                           $"timestamp {parameters.TimeStamp} from " +
                           $"environment '{parameters.EnvId}'");
 
-        var flagValueEvents = await ClickHouseReader.RetrieveFlagValueEventsAsync(parameters);
-        if (flagValueEvents != null && flagValueEvents.Count > 0)
+        var customEventEvents = await ClickHouseReader.RetrieveCustomEventEventsAsync(parameters);
+        if (customEventEvents != null && customEventEvents.Count > 0)
         {
-            Console.WriteLine($"Retrived Item Count: {flagValueEvents.Count}");
+            Console.WriteLine($"Retrived Item Count: {customEventEvents.Count}");
 
             string timeStamp = "";
 
             if (azEvtHubService != null)
             {
-                (bool isSuccess, timeStamp) = await azEvtHubService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+                (bool isSuccess, timeStamp) = await azEvtHubService.WriteCustomEventEventsBatchAsync(customEventEvents);
             }
+
+            await Task.Delay(30000);
 
             if (segmentService != null)
             {
-                (bool isSuccess, timeStamp) = await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+                (bool isSuccess, timeStamp) = await segmentService.WriteCustomEventEventsBatchAsync(customEventEvents);
             }
 
             await Task.Delay(parameters.QueryInterval);
 
             parameters.TimeStamp = timeStamp;
-            totalSentEvent += flagValueEvents.Count;
+            totalSentEvent += customEventEvents.Count;
         }
-        else if (flagValueEvents.Count == 0)
+        else if (customEventEvents.Count == 0)
         {
             Console.WriteLine($"No new items found;");
             await Task.Delay(parameters.BigInterval * 1000);
         }
         Console.WriteLine($"Total sent event count: {totalSentEvent}");
     }
+
+    // test propose only
 }
 
 SegmentWriter CreateSegmentService(string conn)

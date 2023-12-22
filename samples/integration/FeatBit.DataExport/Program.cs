@@ -3,71 +3,79 @@ using FeatBit.DataExport.ClickHouse;
 using FeatBit.DataExport.Destination.AzureEventHub;
 using FeatBit.DataExport.Destination.Segment;
 
-var parameters = new ParamOptions()
-{
-    PageSize = 500,
-    QueryInterval = 100
-};
+var parameters = new ParamOptions();
 if (Util.ParseParameters(args, parameters))
 {
-    Console.WriteLine($"Env Id: " +
-                      $"{parameters.EnvId}; " +
-                      $"Timestamp: {parameters.TimeStamp}; " +
-                      $"Page Size: {parameters.PageSize}");
+    SegmentWriter segmentService = CreateSegmentService(parameters.SegmentConnectionString);
+    AzureEventHubWriter azEvtHubService = CreateAzureEventHubService(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan, parameters.AzureEventHubName);
+
+    if (parameters.EventType.ToLower() == "flagvalue")
+    {
+        await ExportFlagValueEventsAsync(parameters, azEvtHubService, segmentService);
+    }
+    else if (parameters.EventType.ToLower() == "customevent")
+    {
+    }
 }
 else
 {
     Console.WriteLine($"Invalid Parameters");
-    return;
 }
 
 
-SegmentWriter segmentService = CreateSegmentService(parameters.SegmentConnectionString);
-AzureEventHubWriter azEvtHubService = CreateAzureEventHubService(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
+Console.WriteLine($"Press any key to exit...");
+Console.ReadKey();
 
 
-while (true)
+
+async Task ExportFlagValueEventsAsync(ParamOptions parameters, AzureEventHubWriter azEvtHubService, SegmentWriter segmentService)
 {
-    Console.WriteLine($"Retriving FlagValue top " +
-                      $"{parameters.PageSize} events after " +
-                      $"timestamp {parameters.TimeStamp} from " +
-                      $"environment '{parameters.EnvId}'");
+    // test propose only
+    ReaderTester azEvtHubTester = new (parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
+    await azEvtHubTester.ReadAsync();
 
-    var flagValueEvents = await ClickHouseReader.RetrieveFlagValueEventsAsync(parameters);
-    if (flagValueEvents != null && flagValueEvents.Count > 0)
+    long totalSentEvent = 0;
+    while (true)
     {
-        Console.WriteLine($"Retrived Item Count: {flagValueEvents.Count}");
+        Console.WriteLine($"Retriving FlagValue top " +
+                          $"{parameters.PageSize} events after " +
+                          $"timestamp {parameters.TimeStamp} from " +
+                          $"environment '{parameters.EnvId}'");
 
-        string timeStamp = "";
-
-        if (azEvtHubService != null)
+        var flagValueEvents = await ClickHouseReader.RetrieveFlagValueEventsAsync(parameters);
+        if (flagValueEvents != null && flagValueEvents.Count > 0)
         {
-            (bool isSuccess, timeStamp) = await azEvtHubService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            Console.WriteLine($"Retrived Item Count: {flagValueEvents.Count}");
 
-            // test propose only
-            await (new ReaderTester(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan)).Reader();
+            string timeStamp = "";
+
+            if (azEvtHubService != null)
+            {
+                (bool isSuccess, timeStamp) = await azEvtHubService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            }
+
+            if (segmentService != null)
+            {
+                (bool isSuccess, timeStamp) = await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            }
+
+            await Task.Delay(parameters.QueryInterval);
+
+            parameters.TimeStamp = timeStamp;
+            totalSentEvent += flagValueEvents.Count;
         }
-
-        if (segmentService != null)
+        else if (flagValueEvents.Count == 0)
         {
-            (bool isSuccess, timeStamp) = await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            Console.WriteLine($"No new items found;");
+            await Task.Delay(parameters.BigInterval * 1000);
         }
-
-        await Task.Delay(parameters.QueryInterval);
-
-        parameters.TimeStamp = timeStamp;
-    }
-    else if(flagValueEvents.Count == 0)
-    {
-        Console.WriteLine($"No new items found;");
-        await Task.Delay(parameters.BigInterval * 1000);
+        Console.WriteLine($"Total sent event count: {totalSentEvent}");
     }
 }
-
 
 SegmentWriter CreateSegmentService(string conn)
 {
-    if (conn != null && conn.Length > 20 && 
+    if (conn != null && conn.Length > 20 &&
         conn.ToLower().Contains("writekey") &&
         conn.ToLower().Contains("host"))
     {
@@ -76,11 +84,11 @@ SegmentWriter CreateSegmentService(string conn)
     return null;
 }
 
-AzureEventHubWriter CreateAzureEventHubService(string conn, string plan)
+AzureEventHubWriter CreateAzureEventHubService(string conn, string plan, string evtHubName)
 {
-    if (!string.IsNullOrWhiteSpace(conn) && !string.IsNullOrWhiteSpace(plan))
+    if (!string.IsNullOrWhiteSpace(conn) && !string.IsNullOrWhiteSpace(plan) && !string.IsNullOrWhiteSpace(evtHubName))
     {
-            return new AzureEventHubWriter(conn, plan);
+        return new AzureEventHubWriter(conn, plan, evtHubName);
     }
     return null;
 }

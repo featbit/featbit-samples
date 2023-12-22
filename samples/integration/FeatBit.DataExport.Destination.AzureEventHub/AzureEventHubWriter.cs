@@ -16,13 +16,15 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
         private readonly EventHubProducerClient _producerClient;
         private readonly string _eventhubConnectionString;
         private readonly string _eventHubPlan;
-        public AzureEventHubWriter(string azureEventHubConnectionString, string eventHubPlan)
+        private readonly string _eventHubName;
+        public AzureEventHubWriter(string azureEventHubConnectionString, string eventHubPlan, string eventHubName)
         {
             _eventhubConnectionString = azureEventHubConnectionString;
             _eventHubPlan = eventHubPlan;
+            _eventHubName = eventHubName;
             _producerClient = new EventHubProducerClient(
                 azureEventHubConnectionString,
-                "flagvaluecapture");
+                eventHubName);
         }
 
 
@@ -50,6 +52,10 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
                     break;
             }
 
+            Console.WriteLine("===============================================");
+            Console.WriteLine("===============================================");
+            Console.WriteLine($"Sending {flagValueEvents.Count} events To Azure Event Hub {_eventHubName}...");
+
             using EventDataBatch eventBatch = await _producerClient.CreateBatchAsync();
 
             int batchIndex = 0, totalEvent = flagValueEvents.Count;
@@ -59,6 +65,7 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
                 if(restEvent <= 0)
                     break;
                 int takeEvent = restEvent > batchSize ? batchSize : restEvent;
+
                 IEnumerable<FlagValueEvent> batchEvents = flagValueEvents.Skip(batchIndex * batchSize).Take(takeEvent);
                 foreach (var evt in batchEvents)
                 {
@@ -78,55 +85,20 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
                     var firstEvt = batchEvents.First();
                     throw new Exception($"Failed to Send Batch. First Event Id {firstEvt.Id} @ {firstEvt.Timestamp}; {JsonSerializer.Serialize(firstEvt)}", ex);
                 }
-                finally
-                {
-                    await _producerClient.DisposeAsync();
-                }
                 batchIndex++;
             }
+
+            Console.WriteLine($"{flagValueEvents.Count} events sents to Azure Event Hub...");
+            Console.WriteLine("===============================================");
+            Console.WriteLine("===============================================");
 
             return (true, lastSentTimeStamp);
 
         }
 
-        public async Task Reader()
+        public async Task Dispose()
         {
-            // Create a blob container client that the event processor will use 
-            BlobContainerClient storageClient = new BlobContainerClient(
-                "DefaultEndpointsProtocol=https;AccountName=featbit;AccountKey=VbnyNGCVuqsWHSDrOtbcWO2N2waCXdsgW0EH3giadrEhlfExiLQpRr5PdLYZORQ2jzv/IKQ2ZxaY+AStNK/krQ==;EndpointSuffix=core.windows.net", "flagvalueevents");
-
-            var processor = new EventProcessorClient(
-                storageClient,
-                EventHubConsumerClient.DefaultConsumerGroupName,
-                _eventhubConnectionString,
-                "flagvaluecapture");
-
-            processor.ProcessEventAsync += ProcessEventHandler;
-            processor.ProcessErrorAsync += ProcessErrorHandler;
-
-            await processor.StartProcessingAsync();
-
-            await Task.Delay(TimeSpan.FromSeconds(30));
-
-            // Stop the processing
-            await processor.StopProcessingAsync();
-        }
-
-        public Task ProcessEventHandler(ProcessEventArgs eventArgs)
-        {
-            // Write the body of the event to the console window
-            Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
-            Console.ReadLine();
-            return Task.CompletedTask;
-        }
-
-        public Task ProcessErrorHandler(ProcessErrorEventArgs eventArgs)
-        {
-            // Write details about the error to the console window
-            Console.WriteLine($"\tPartition '{eventArgs.PartitionId}': an unhandled exception was encountered. This was not expected to happen.");
-            Console.WriteLine(eventArgs.Exception.Message);
-            Console.ReadLine();
-            return Task.CompletedTask;
+            await _producerClient.DisposeAsync();
         }
     }
 }

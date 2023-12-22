@@ -4,6 +4,13 @@ namespace FeatBit.DataExport
 {
     public class ParamOptions
     {
+        public ParamOptions()
+        {
+            QueryInterval = 1000;
+            BigInterval = 30;
+            PageSize = 1000;
+            EventType = "FlagValue";
+        }
         [Option('e', "env", Required = true, HelpText = "Environment where you want to query ")]
         public string EnvId { get; set; }
 
@@ -33,5 +40,8 @@ namespace FeatBit.DataExport
 
         [Option('b', "biginterval", Required = false, HelpText = "Interval (seconds) to next query if no items return from the query")]
         public int BigInterval { get; set; }
+
+        [Option("eventtype", Required = false, HelpText = "The event type you want to export. 'FlagValue' for Feature Flag Evaluation or 'CustomEvent' for Metric")]
+        public string EventType { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace FeatBit.DataExport
                         options.AzureEventHubConnectionString = o.AzureEventHubConnectionString;
                         options.AzureEventHubPlan = o.AzureEventHubPlan;
                         options.AzureEventHubName = o.AzureEventHubName;
+                        options.EventType = o.EventType;
 
                         if (o.PageSize != null)
                         {

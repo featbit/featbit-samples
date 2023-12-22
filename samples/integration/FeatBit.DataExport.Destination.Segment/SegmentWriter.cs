@@ -39,25 +39,24 @@ namespace FeatBit.DataExport.Destination.Segment
             return (baseAddress, writeKey);
         }
 
-        public async Task<(bool ifAllSent, string lastTimeStamp, FlagValueEvent failedEvent)> WriteFlagValueEventsBatchAsync(
-            List<FlagValueEvent> flagValueEvents, string lastTimeStamp)
+        public async Task<(bool ifAllSent, string lastSentTimeStamp)> WriteFlagValueEventsBatchAsync(
+            List<FlagValueEvent> flagValueEvents)
         {
+            string lastSentTimeStamp = "";
             Console.WriteLine($"Sending To Segment...");
-            FlagValueEvent failedEvent = null;
             foreach (var evt in flagValueEvents)
             {
                 if (await WriteFlagValueEventAsync(evt))
                 {
-                    lastTimeStamp = evt.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    lastSentTimeStamp = evt.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 }
                 else
                 {
-                    failedEvent = evt;
                     throw new Exception($"Write FlagValue Event Failed! Timestamp: {evt.Timestamp}; UUId: {evt.Id}; JsonContent: {JsonSerializer.Serialize(evt)}");
                 }
             }
-            Console.WriteLine($"Sent Events To Segment.com! Item Count: {flagValueEvents.Count}; Last TimeStamp: {lastTimeStamp}");
-            return (true, lastTimeStamp, failedEvent);
+            Console.WriteLine($"Sent Events To Segment.com! Item Count: {flagValueEvents.Count}; Last TimeStamp: {lastSentTimeStamp}");
+            return (true, lastSentTimeStamp);
         }
 
         public async Task<bool> WriteFlagValueEventAsync(

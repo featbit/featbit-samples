@@ -12,4 +12,8 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FeatBit.DataExport.Models\FeatBit.DataExport.Models.csproj" />
+  </ItemGroup>
+
 </Project>

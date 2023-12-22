@@ -6,6 +6,7 @@ using System.Text;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Storage.Blobs;
+using System.Text.Json;
 
 
 namespace FeatBit.DataExport.Destination.AzureEventHub
@@ -14,42 +15,78 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
     {
         private readonly EventHubProducerClient _producerClient;
         private readonly string _eventhubConnectionString;
-        public AzureEventHubWriter(string azureEventHubConnectionString)
+        private readonly string _eventHubPlan;
+        public AzureEventHubWriter(string azureEventHubConnectionString, string eventHubPlan)
         {
             _eventhubConnectionString = azureEventHubConnectionString;
+            _eventHubPlan = eventHubPlan;
             _producerClient = new EventHubProducerClient(
                 azureEventHubConnectionString,
                 "flagvaluecapture");
         }
 
-        public async Task Write()
-        {
-            // number of events to be sent to the event hub
-            int numOfEvents = 3;
 
-            // Create a batch of events 
+        public async Task<(bool ifAllSent, string lastSentTimeStamp)> WriteFlagValueEventsBatchAsync(
+            List<FlagValueEvent> flagValueEvents)
+        {
+            string lastSentTimeStamp = "";
+            int batchSize = 100;
+            switch(_eventHubPlan)
+            {
+                case "Basic":
+                    batchSize = 100;
+                    break;
+                case "Standard":
+                    batchSize = 500;
+                    break;
+                case "Premium":
+                    batchSize = 500;
+                    break;
+                case "Dedicated":
+                    batchSize = 500;
+                    break;
+                default:
+                    batchSize = 100;
+                    break;
+            }
+
             using EventDataBatch eventBatch = await _producerClient.CreateBatchAsync();
 
-            for (int i = 1; i <= numOfEvents; i++)
+            int batchIndex = 0, totalEvent = flagValueEvents.Count;
+            while (true)
             {
-                if (!eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes($"Event {i}"))))
+                int restEvent = totalEvent - batchIndex * batchSize;
+                if(restEvent <= 0)
+                    break;
+                int takeEvent = restEvent > batchSize ? batchSize : restEvent;
+                IEnumerable<FlagValueEvent> batchEvents = flagValueEvents.Skip(batchIndex * batchSize).Take(takeEvent);
+                foreach (var evt in batchEvents)
                 {
-                    // if it is too large for the batch
-                    throw new Exception($"Event {i} is too large for the batch and cannot be sent.");
+                    if (!eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(evt)))))
+                    {
+                        var firstEvt = batchEvents.First();
+                        throw new Exception($"Failed to Try Add FlagValueEvent to Batch. It's maybe too large for the batch. First Event Id {firstEvt.Id} @ {firstEvt.Timestamp}; {JsonSerializer.Serialize(firstEvt)}");
+                    }
                 }
+                try
+                {
+                    await _producerClient.SendAsync(eventBatch);
+                    lastSentTimeStamp = batchEvents.Last().Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                }
+                catch (Exception ex)
+                {
+                    var firstEvt = batchEvents.First();
+                    throw new Exception($"Failed to Send Batch. First Event Id {firstEvt.Id} @ {firstEvt.Timestamp}; {JsonSerializer.Serialize(firstEvt)}", ex);
+                }
+                finally
+                {
+                    await _producerClient.DisposeAsync();
+                }
+                batchIndex++;
             }
 
-            try
-            {
-                // Use the producer client to send the batch of events to the event hub
-                await _producerClient.SendAsync(eventBatch);
-                Console.WriteLine($"A batch of {numOfEvents} events has been published.");
-                Console.ReadLine();
-            }
-            finally
-            {
-                await _producerClient.DisposeAsync();
-            }
+            return (true, lastSentTimeStamp);
+
         }
 
         public async Task Reader()
@@ -58,21 +95,17 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
             BlobContainerClient storageClient = new BlobContainerClient(
                 "DefaultEndpointsProtocol=https;AccountName=featbit;AccountKey=VbnyNGCVuqsWHSDrOtbcWO2N2waCXdsgW0EH3giadrEhlfExiLQpRr5PdLYZORQ2jzv/IKQ2ZxaY+AStNK/krQ==;EndpointSuffix=core.windows.net", "flagvalueevents");
 
-            // Create an event processor client to process events in the event hub
             var processor = new EventProcessorClient(
                 storageClient,
                 EventHubConsumerClient.DefaultConsumerGroupName,
                 _eventhubConnectionString,
                 "flagvaluecapture");
 
-            // Register handlers for processing events and handling errors
             processor.ProcessEventAsync += ProcessEventHandler;
             processor.ProcessErrorAsync += ProcessErrorHandler;
 
-            // Start the processing
             await processor.StartProcessingAsync();
 
-            // Wait for 30 seconds for the events to be processed
             await Task.Delay(TimeSpan.FromSeconds(30));
 
             // Stop the processing

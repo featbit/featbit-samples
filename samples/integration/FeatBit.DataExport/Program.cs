@@ -1,10 +1,7 @@
-﻿// .\FeatBit.DataExport.exe -e "32f6be54-6796-44dd-bc82-f4824b0da13c" -t "2023-12-12 07:42:13.062" -c "Host=127.0.0.1;Protocol=http;Port=8123;Database=featbit" -g "WriteKey=NUc5S2JlSGRqc3ExOVN1eGhLQ29TdjJMVW1SamRHWm4=;Host=https://api.segment.io" -s 500 -i 100 -b 30 -a "Endpoint=sb://featbit.servicebus.windows.net/;SharedAccessKeyName=FeatBit;SharedAccessKey=nk6sEZuTmJN2/sSCTGHzy9KlHJpdKU05K+AEhP1AOYQ="
-
-using FeatBit.DataExport;
+﻿using FeatBit.DataExport;
 using FeatBit.DataExport.ClickHouse;
 using FeatBit.DataExport.Destination.AzureEventHub;
 using FeatBit.DataExport.Destination.Segment;
-using System.Text.Json;
 
 var parameters = new ParamOptions()
 {
@@ -13,7 +10,10 @@ var parameters = new ParamOptions()
 };
 if (Util.ParseParameters(args, parameters))
 {
-    Console.WriteLine($"Env Id: {parameters.EnvId}; Timestamp: {parameters.TimeStamp}; Page Size: {parameters.PageSize}");
+    Console.WriteLine($"Env Id: " +
+                      $"{parameters.EnvId}; " +
+                      $"Timestamp: {parameters.TimeStamp}; " +
+                      $"Page Size: {parameters.PageSize}");
 }
 else
 {
@@ -22,13 +22,8 @@ else
 }
 
 
-AzureEventHubWriter azureEventHubWriter = new AzureEventHubWriter(parameters.AzureEventHubConnectionString);
-await azureEventHubWriter.Write();
-await azureEventHubWriter.Reader();
-
-return;
-
 SegmentWriter segmentService = CreateSegmentService(parameters.SegmentConnectionString);
+AzureEventHubWriter azEvtHubService = CreateAzureEventHubService(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
 
 
 while (true)
@@ -43,18 +38,24 @@ while (true)
     {
         Console.WriteLine($"Retrived Item Count: {flagValueEvents.Count}");
 
-        if(segmentService != null)
+        string timeStamp = "";
+
+        if (azEvtHubService != null)
         {
-            (bool isSuccess, parameters.TimeStamp, FlagValueEvent failedEvent) = 
-                await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents, parameters.TimeStamp);
-            if(!isSuccess)
-            {
-                Console.WriteLine($"Write FlagValue Events Failed! Timestamp: {parameters.TimeStamp}; JsonContent: {JsonSerializer.Serialize(failedEvent)}");
-                break;
-            }   
+            (bool isSuccess, timeStamp) = await azEvtHubService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+
+            // test propose only
+            await (new ReaderTester(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan)).Reader();
+        }
+
+        if (segmentService != null)
+        {
+            (bool isSuccess, timeStamp) = await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents);
         }
 
         await Task.Delay(parameters.QueryInterval);
+
+        parameters.TimeStamp = timeStamp;
     }
     else if(flagValueEvents.Count == 0)
     {
@@ -71,6 +72,15 @@ SegmentWriter CreateSegmentService(string conn)
         conn.ToLower().Contains("host"))
     {
         return new SegmentWriter(conn);
+    }
+    return null;
+}
+
+AzureEventHubWriter CreateAzureEventHubService(string conn, string plan)
+{
+    if (!string.IsNullOrWhiteSpace(conn) && !string.IsNullOrWhiteSpace(plan))
+    {
+            return new AzureEventHubWriter(conn, plan);
     }
     return null;
 }

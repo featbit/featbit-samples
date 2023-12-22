@@ -16,8 +16,14 @@ namespace FeatBit.DataExport
         [Option('g', "segment", Required = false, HelpText = "Segment Connection String, example: WriteKey=NUc5S2Jl*****xOVN1eGhLQ29T**1SamRHWm4=;Host=https://api.segment.io")]
         public string SegmentConnectionString { get; set; }
 
-        [Option('a', "azevthub", Required = false, HelpText = "Azure Event Hub Connection String, example: ")]
+        [Option('a', "azevthub", Required = false, HelpText = "Azure Event Hub Connection String")]
         public string AzureEventHubConnectionString { get; set; }
+
+        [Option("azevthubplan", Required = false, HelpText = "Azure Event Hub Plan (Basic, Standard, Premium, Dedicated), this is useful for EventDataBatch item count")]
+        public string AzureEventHubPlan { get; set; }
+
+        [Option("azevthubname", Required = false, HelpText = "Azure Event Hub Name")]
+        public string AzureEventHubName { get; set; }
 
         [Option('s', "size", Required = false, HelpText = "Page size should be greater than 0")]
         public int? PageSize { get; set; }

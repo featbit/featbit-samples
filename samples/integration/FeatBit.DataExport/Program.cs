@@ -15,6 +15,7 @@ if (Util.ParseParameters(args, parameters))
     }
     else if (parameters.EventType.ToLower() == "customevent")
     {
+        await ExportCustomEventEventsAsync(parameters, azEvtHubService, segmentService);
     }
 }
 else
@@ -27,11 +28,55 @@ Console.WriteLine($"Press any key to exit...");
 Console.ReadKey();
 
 
-
 async Task ExportFlagValueEventsAsync(ParamOptions parameters, AzureEventHubWriter azEvtHubService, SegmentWriter segmentService)
 {
     // test propose only
     ReaderTester azEvtHubTester = new (parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
+    await azEvtHubTester.ReadAsync();
+
+    long totalSentEvent = 0;
+    while (true)
+    {
+        Console.WriteLine($"Retriving FlagValue top " +
+                          $"{parameters.PageSize} events after " +
+                          $"timestamp {parameters.TimeStamp} from " +
+                          $"environment '{parameters.EnvId}'");
+
+        var flagValueEvents = await ClickHouseReader.RetrieveFlagValueEventsAsync(parameters);
+        if (flagValueEvents != null && flagValueEvents.Count > 0)
+        {
+            Console.WriteLine($"Retrived Item Count: {flagValueEvents.Count}");
+
+            string timeStamp = "";
+
+            if (azEvtHubService != null)
+            {
+                (bool isSuccess, timeStamp) = await azEvtHubService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            }
+
+            if (segmentService != null)
+            {
+                (bool isSuccess, timeStamp) = await segmentService.WriteFlagValueEventsBatchAsync(flagValueEvents);
+            }
+
+            await Task.Delay(parameters.QueryInterval);
+
+            parameters.TimeStamp = timeStamp;
+            totalSentEvent += flagValueEvents.Count;
+        }
+        else if (flagValueEvents.Count == 0)
+        {
+            Console.WriteLine($"No new items found;");
+            await Task.Delay(parameters.BigInterval * 1000);
+        }
+        Console.WriteLine($"Total sent event count: {totalSentEvent}");
+    }
+}
+
+async Task ExportCustomEventEventsAsync(ParamOptions parameters, AzureEventHubWriter azEvtHubService, SegmentWriter segmentService)
+{
+    // test propose only
+    ReaderTester azEvtHubTester = new(parameters.AzureEventHubConnectionString, parameters.AzureEventHubPlan);
     await azEvtHubTester.ReadAsync();
 
     long totalSentEvent = 0;

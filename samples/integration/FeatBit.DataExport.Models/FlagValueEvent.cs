@@ -14,7 +14,6 @@ namespace FeatBit.DataExport
         public string DistinctId { get; set; }
         public string EventName { get; set; }
         public DateTime CHTimestamp { get; set; }
-        //public string Properties { get; set; }
         public string Route { get; set; }
         public string FeatureFlagId { get; set; }
         public string AccountId { get; set; }

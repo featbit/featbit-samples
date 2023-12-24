@@ -43,5 +43,8 @@ namespace FeatBit.DataExport
 
         [Option("eventtype", Required = false, HelpText = "The event type you want to export. 'FlagValue' for Feature Flag Evaluation or 'CustomEvent' for Metric")]
         public string EventType { get; set; }
+
+        [Option("pipeline", Required = false, HelpText = "Options: FlagValueToSegment,FlagValueToAzureEventHub,CustomEventToSegment,CustomEventToAzureEventHub")]
+        public string Pipeline { get; set; }
     }
 }

@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Models",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Destination.Segment", "..\FeatBit.DataExport.Destination.Segment\FeatBit.DataExport.Destination.Segment.csproj", "{13666868-E27B-465C-AEFE-1C379A98DD61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.DataExport.Destination.AzureEventHub", "..\FeatBit.DataExport.Destination.AzureEventHub\FeatBit.DataExport.Destination.AzureEventHub.csproj", "{D545B589-5309-4E1A-97A7-A0696B6CCECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Destination.AzureEventHub", "..\FeatBit.DataExport.Destination.AzureEventHub\FeatBit.DataExport.Destination.AzureEventHub.csproj", "{D545B589-5309-4E1A-97A7-A0696B6CCECB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Pipelines.Segment", "..\FeatBit.DataExport.Pipeline.FlagValueEventsToSegment\FeatBit.DataExport.Pipelines.Segment.csproj", "{09C3159C-CC0C-4593-93BD-0FF5EBB33869}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatBit.DataExport.Pipelines", "FeatBit.DataExport.Pipelines", "{CE09FC89-02F4-4757-81AF-1247BA445935}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatBit.DataExport.Pipelines.AzureEventHub", "..\FeatBit.DataExport.Pipeline.CustomEventToSegment\FeatBit.DataExport.Pipelines.AzureEventHub.csproj", "{0848F304-88CB-4B80-ACD6-249B13CD53E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,21 @@ Global
 		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D545B589-5309-4E1A-97A7-A0696B6CCECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C3159C-CC0C-4593-93BD-0FF5EBB33869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C3159C-CC0C-4593-93BD-0FF5EBB33869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C3159C-CC0C-4593-93BD-0FF5EBB33869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C3159C-CC0C-4593-93BD-0FF5EBB33869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0848F304-88CB-4B80-ACD6-249B13CD53E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0848F304-88CB-4B80-ACD6-249B13CD53E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0848F304-88CB-4B80-ACD6-249B13CD53E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0848F304-88CB-4B80-ACD6-249B13CD53E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{09C3159C-CC0C-4593-93BD-0FF5EBB33869} = {CE09FC89-02F4-4757-81AF-1247BA445935}
+		{0848F304-88CB-4B80-ACD6-249B13CD53E5} = {CE09FC89-02F4-4757-81AF-1247BA445935}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F626134D-1BCC-4966-B49A-58BBA0070B9B}

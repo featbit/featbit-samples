@@ -54,16 +54,16 @@ namespace FeatBit.DataExport.Destination.AzureEventHub
 
             //await eventArgs.UpdateCheckpointAsync();
 
-            //string partition = eventArgs.Partition.PartitionId;
-            //int eventsSinceLastCheckpoint = _partitionEventCount.AddOrUpdate(
-            //    key: partition,
-            //    addValue: 1,
-            //    updateValueFactory: (_, currentCount) => currentCount + 1);
-            //if (eventsSinceLastCheckpoint >= _eventsBeforeCheckpoint)
-            //{
-            //    await eventArgs.UpdateCheckpointAsync();
-            //    _partitionEventCount[partition] = 0;
-            //}
+            string partition = eventArgs.Partition.PartitionId;
+            int eventsSinceLastCheckpoint = _partitionEventCount.AddOrUpdate(
+                key: partition,
+                addValue: 1,
+                updateValueFactory: (_, currentCount) => currentCount + 1);
+            if (eventsSinceLastCheckpoint >= _eventsBeforeCheckpoint)
+            {
+                await eventArgs.UpdateCheckpointAsync();
+                _partitionEventCount[partition] = 0;
+            }
         }
 
         public Task ProcessErrorHandler(ProcessErrorEventArgs eventArgs)

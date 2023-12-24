@@ -1,7 +1,5 @@
 ﻿using ClickHouse.Client.ADO;
 using Dapper;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace FeatBit.DataExport.ClickHouse
 {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FeatBit.DataExport": {
+      "commandName": "Project",
+      "commandLineArgs": "-e \"32f6be54-6796-44dd-bc82-f4824b0da13c\" -t \"2023-12-12 07:42:13.288\" -c \"Host=127.0.0.1;Protocol=http;Port=8123;Database=featbit\" -s 1000 -i 100 -b 5 -a \"Endpoint=sb://featbitexportdata.servicebus.windows.net/;SharedAccessKeyName=flagvalueevents;SharedAccessKey=Q0sX***FAKE***Yz/kUnGu1wAbjeRnB+AEhJIzHhU=\" --azevthubplan \"Basic\" --azevthubname \"flagvaluecapture\" --eventtype \"CustomEvent\" --pipeline \"FlagValueToAzureEventHub\""
+    }
+  }
+}

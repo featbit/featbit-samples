@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FeatBit.DataExport.Destination.Segment\FeatBit.DataExport.Destination.Segment.csproj" />
+    <ProjectReference Include="..\FeatBit.DataExport.Models\FeatBit.DataExport.Models.csproj" />
+    <ProjectReference Include="..\FeatBit.DataExport.ReadFromClickHouse\FeatBit.DataExport.ClickHouse.csproj" />
+  </ItemGroup>
+
+</Project>

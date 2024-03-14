@@ -1,0 +1,6 @@
+@OptimizeReleasePipelineAPIs_HostAddress = http://localhost:5269
+
+GET {{OptimizeReleasePipelineAPIs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

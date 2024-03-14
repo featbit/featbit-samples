@@ -9,10 +9,6 @@
     }
     public class EnvDiffReportModel
     {
-        public string? LastEnvironmentId { get; set; }
-        public string? CurrentEnvironmentId { get; set; }
-        public List<FeatureFlagSimple> FeatureFlags { get; set; }
-        public List<string> Warnings { get; set; }
-        public List<string> Errors { get; set; }
+        public List<string> Differences { get; set; }
     }
 }

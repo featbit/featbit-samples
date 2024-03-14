@@ -19,29 +19,31 @@ namespace OptimizeReleasePipelineAPIs.Services
             var lastEnvFeatureFlags = await GetEnvFeatureFlagsAsync(param.LastEnvironmentId, param.AccessToken);
             var currentEnvFeatureFlags = await GetEnvFeatureFlagsAsync(param.CurrentEnvironmentId, param.AccessToken);
 
-            var report = new EnvDiffReportModel() { Warnings = [], Errors = [] };
+            var report = new EnvDiffReportModel() { Differences = [] };
 
             foreach (var lastFlag in lastEnvFeatureFlags)
             {
                 var currentFlag = currentEnvFeatureFlags.FirstOrDefault(f => f.Key == lastFlag.Key);
                 if (currentFlag == null)
                 {
-                    report.Warnings.Add($"Flag '{lastFlag.Key}' is missing in the current environment.");
+                    report.Differences.Add($"Flag '{lastFlag.Key}' is missing in the current environment.");
                 }
-                else if (!AreVariationsEqual(lastFlag.Variations, currentFlag.Variations))
+                else
                 {
-                    report.Errors.Add($"Variations for flag '{lastFlag.Key}' are different.");
+                    var ave = AreVariationsEqual(lastFlag.Variations, currentFlag.Variations);
+                    if (ave.Item1 == false)
+                        report.Differences.Add($"Flag '{lastFlag.Key}': {ave.Item2}");
                 }
             }
 
             return report;
         }
 
-        private bool AreVariationsEqual(ICollection<Variation> variations1, ICollection<Variation> variations2)
+        private Tuple<bool, string> AreVariationsEqual(ICollection<Variation> variations1, ICollection<Variation> variations2)
         {
             if (variations1.Count != variations2.Count)
             {
-                return false;
+                return new Tuple<bool, string>(false, $"Last Env has {variations1.Count} variations, Current Env has {variations2.Count} variations");
             }
 
             // Create a HashSet to store the values of variations in variations2
@@ -52,10 +54,10 @@ namespace OptimizeReleasePipelineAPIs.Services
             {
                 if (!variations2Values.Contains(variation1.Value))
                 {
-                    return false;
+                    return new Tuple<bool, string>(false, $"variation {variation1.Value} doesn't exist in current environment");
                 }
             }
-            return true;
+            return new Tuple<bool, string>(true, "");
         }
 
         private async Task<List<FeatureFlagSimple>> GetEnvFeatureFlagsAsync(string envId, string accessToken)

@@ -4,6 +4,6 @@ namespace TestingFeatureFlags.Services
 {
     public interface IDataService
     {
-        Task<DataModelOne> ReadDataOneAsync(string id);
+        Task<OneModel?> ReadDataOneAsync(string id);
     }
 }

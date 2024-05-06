@@ -16,7 +16,7 @@ namespace TestingFeatureFlags.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<DataModelOne> Get(string id)
+        public async Task<OneModel> Get(string id)
         {
             return await _dataService.ReadDataOneAsync(id);
         }

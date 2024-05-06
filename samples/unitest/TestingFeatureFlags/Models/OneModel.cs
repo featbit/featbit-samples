@@ -1,6 +1,6 @@
 ﻿namespace TestingFeatureFlags.Models
 {
-    public class DataModelOne
+    public class OneNoSql
     {
         public string Id { get; set; }
     }

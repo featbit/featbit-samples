@@ -1,41 +1,58 @@
 ﻿using FeatBit.Sdk.Server;
 using TestingFeatureFlags.Models;
+using TestingFeatureFlags.Repositories;
 using TestingFeatureFlags.Utils;
 
 namespace TestingFeatureFlags.Services
 {
     public class DataService : IDataService
     {
-        private readonly DataDbContext _dbContext;
-        private readonly DataDbV2Context _dbV2Context;
+        private readonly IOneRepository _oneRepository;
+        private readonly IOneNoSqlRepository _oneNoSqlRepository;
+        private readonly ILogger<DataService> _logger;
         private readonly IFbClient _fbClient;
         public DataService(
-            DataDbContext dbContext,
-            DataDbV2Context dbV2Context,
+            ILogger<DataService> logger,
+            IOneRepository oneRepository,
+            IOneNoSqlRepository oneNoSqlRepository,
             IFbClient fbClient)
         {
-            _dbContext = dbContext;
-            _dbV2Context = dbV2Context;
+            _logger = logger;
+            _oneRepository = oneRepository;
+            _oneNoSqlRepository = oneNoSqlRepository;
             _fbClient = fbClient;
         }
 
-        public async Task<DataModelOne> ReadDataOneAsync(string id)
+        public async Task<OneModel?> ReadDataOneAsync(string id)
         {
-            await Task.Delay(1000);
-
-            if (_fbClient.FlagValue("data-one-migration", "none") == "read-only")
+            var f1 = async () =>
             {
-                // simulate read operation
-                await Task.Delay(1000);
-
-                // simulate read compare operation
-                await Task.Delay(1000);
-            }
-
-            return new DataModelOne()
-            {
-                Id = id
+                var one = await _oneRepository.GetByIdAsync(id);
+                return one == null ? null : new OneModel()
+                {
+                    Id = one.Id
+                };
             };
+            var f2 = async () =>
+            {
+                var one = await _oneNoSqlRepository.GetByIdAsync(id);
+                return one == null ? null : new OneModel()
+                {
+                    Id = one.Id
+                };
+            };
+            Action<OneModel?, OneModel?> aCompare = (r1, r2) =>
+            {
+                if(r2 == null)
+                {
+                    _logger.LogError($"Read One item in NoSql Database Failed");
+                }
+                if(r1?.Id != r2?.Id)
+                {
+                    _logger.LogError($"Item in noSql Database doesn't equal to Item in sql databse");
+                }
+            };
+            return await FbDbMigration<OneModel?>.MigrateAsync(f1, f2, _fbClient, "data-one-migration", aCompare);
         }
     }
 }

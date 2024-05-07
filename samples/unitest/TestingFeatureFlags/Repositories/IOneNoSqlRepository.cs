@@ -4,7 +4,7 @@ namespace TestingFeatureFlags.Repositories
 {
     public interface IOneNoSqlRepository : IDisposable
     {
-        Task<One> GetByIdAsync(string id);
-        Task InsertAsync(One one);
+        Task<OneNoSql> GetByIdAsync(string id);
+        Task InsertAsync(OneNoSql one);
     }
 }

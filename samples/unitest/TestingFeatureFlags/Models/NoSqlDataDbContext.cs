@@ -9,6 +9,6 @@ namespace TestingFeatureFlags.Models
         {
         }
 
-        public DbSet<One> OneItems { get; set; } = null!;
+        public DbSet<OneNoSql> OneItems { get; set; } = null!;
     }
 }

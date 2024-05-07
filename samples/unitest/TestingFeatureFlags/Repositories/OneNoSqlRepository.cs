@@ -4,24 +4,24 @@ namespace TestingFeatureFlags.Repositories
 {
     public class OneNoSqlRepository : IDisposable, IOneNoSqlRepository
     {
-        private readonly SqlDataDbContext _dbContext;
+        private readonly NoSqlDataDbContext _dbContext;
 
-        public OneNoSqlRepository(SqlDataDbContext context)
+        public OneNoSqlRepository(NoSqlDataDbContext context)
         {
             _dbContext = context;
         }
 
-        public async Task<One> GetByIdAsync(string id)
+        public async Task<OneNoSql> GetByIdAsync(string id)
         {
-            //return await _dbContext.OneItems.FindAsync(id);
+            return await _dbContext.OneItems.FindAsync(id);
             await Task.Delay(500);
-            return new One
+            return new OneNoSql
             {
                 Id = id
             };
         }
 
-        public async Task InsertAsync(One one)
+        public async Task InsertAsync(OneNoSql one)
         {
             _dbContext.OneItems.Add(one);
             await _dbContext.SaveChangesAsync();

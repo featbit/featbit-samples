@@ -10,10 +10,6 @@ namespace TestingFeatureFlags.Utils
 {
     public static class FeatBitExtensions
     {
-        public static bool FeatureEnabled(this IFbClient fb, string featureFlagKey, bool defaultValue = false)
-        {
-            return fb.BoolVariation(featureFlagKey, FbUser.Builder($"{featureFlagKey}-singleton").Build(), defaultValue);
-        }
         
         public static FeatBitMigrationEnum MigrationState(this IFbClient fb, string featureFlagKey, string defaultValue = "")
         {

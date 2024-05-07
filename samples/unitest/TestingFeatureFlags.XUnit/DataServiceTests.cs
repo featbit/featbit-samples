@@ -2,7 +2,8 @@ using FeatBit.Sdk.Server;
 using FeatBit.Sdk.Server.Model;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Reflection.Metadata.Ecma335;
+using TestingFeatureFlags.Models;
+using TestingFeatureFlags.Repositories;
 using TestingFeatureFlags.Services;
 
 namespace TestingFeatureFlags.XUnit
@@ -15,16 +16,27 @@ namespace TestingFeatureFlags.XUnit
 
         }
 
-        [Theory]
-        public void ReadDataOneAsyncTest(string ffValue)
+        [Theory, CombinatorialData]
+        public void ReadDataOneAsyncTest(
+            [CombinatorialValues("ReadFromOldDbOnly", "ReadFromNewDbOnly", "ReadFromOldAndNewDb")]string ffValue,
+            [CombinatorialValues("not-important")] string oneId)
         {
-            var mock = new Mock<IFbClient>();
-            var fbUser = FbUser.Builder($"not-important").Build();
-            mock.Setup(fb => fb.StringVariation("data-one-migration", fbUser, "")).Returns(ffValue);
+            var mockFbClient = new Mock<IFbClient>();
+            mockFbClient.Setup(fb => fb.StringVariation("data-one-migration", It.IsAny<FbUser>(), "")).Returns(ffValue);
 
-            //using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
-            //ILogger logger = factory.CreateLogger("DataService");
-            //var ds = new DataService(logger,  );
+            var mockNoSqlRepo = new Mock<IOneNoSqlRepository>();
+            mockNoSqlRepo.Setup(r => r.GetByIdAsync(oneId)).ReturnsAsync(new OneNoSql() { Id = oneId });
+
+            var mockSqlRepo = new Mock<IOneRepository>();
+            mockSqlRepo.Setup(r => r.GetByIdAsync(oneId)).ReturnsAsync(new One() { Id = oneId });
+
+            using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+            ILogger<DataService> logger = factory.CreateLogger<DataService>();
+
+            var ds = new DataService(logger, mockSqlRepo.Object, mockNoSqlRepo.Object, mockFbClient.Object);
+            var ro = ds.ReadDataOneAsync(oneId).Result;
+
+            Assert.Equal(oneId, ro?.Id);
         }
     }
 }

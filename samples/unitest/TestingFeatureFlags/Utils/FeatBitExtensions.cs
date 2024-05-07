@@ -30,7 +30,7 @@ namespace TestingFeatureFlags.Utils
 
     public class FbDbMigration<T>
     {
-        public async static Task<T> MigrateAsync(Func<Task<T>> a1, Func<Task<T>> a2, IFbClient fbClient, string ffKey, Action<T, T> compare, int timeOut = 2000)
+        public async static Task<T> MigrateAsync(Func<Task<T>> a1, Func<Task<T>> a2, IFbClient fbClient, string ffKey, Action<T, T> compare, int timeOut = 10000)
         {
             var migrationState = fbClient.MigrationState(ffKey);
             if (migrationState == FeatBitMigrationEnum.ReadFromOldDbOnly)
@@ -39,13 +39,21 @@ namespace TestingFeatureFlags.Utils
                 return await Task.Run<T>(a2);
             else
             {
+                using var cts = new CancellationTokenSource();
                 var t1 = Task.Run<T>(a1);
 
                 var t2 = Task.Run<T>(a2);
-                var tTimeout = Task<T>.Delay(timeOut).ContinueWith<T>((state) =>
+                t2.ContinueWith((state) =>
+                {
+                    cts.Cancel();
+                });
+                var tTimeout = Task<T>.Delay(timeOut, cts.Token).ContinueWith<T>((state) =>
                 {
                     return default;
                 });
+
+                Task.Delay(100).Wait();
+                
                 var parallelTasks = await Task.WhenAll<T>(t1, Task.WhenAny<T>(t2, tTimeout).Result);
 
                 compare(parallelTasks[0], parallelTasks[1]);

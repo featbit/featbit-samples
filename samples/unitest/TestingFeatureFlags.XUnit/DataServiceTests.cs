@@ -17,7 +17,7 @@ namespace TestingFeatureFlags.XUnit
         }
 
         [Theory, CombinatorialData]
-        public void ReadDataOneAsyncTest(
+        public async void ReadDataOneAsyncTest(
             [CombinatorialValues("ReadFromOldDbOnly", "ReadFromNewDbOnly", "ReadFromOldAndNewDb")]string ffValue,
             [CombinatorialValues("not-important")] string oneId)
         {
@@ -34,7 +34,7 @@ namespace TestingFeatureFlags.XUnit
             ILogger<DataService> logger = factory.CreateLogger<DataService>();
 
             var ds = new DataService(logger, mockSqlRepo.Object, mockNoSqlRepo.Object, mockFbClient.Object);
-            var ro = ds.ReadDataOneAsync(oneId).Result;
+            var ro = await ds.ReadDataOneAsync(oneId);
 
             Assert.Equal(oneId, ro?.Id);
         }

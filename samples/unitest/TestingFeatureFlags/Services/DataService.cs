@@ -25,6 +25,7 @@ namespace TestingFeatureFlags.Services
 
         public async Task<OneModel?> ReadDataOneAsync(string id)
         {
+            // function for retriving data (name is one) from sql database
             var f1 = async () =>
             {
                 var one = await _oneRepository.GetByIdAsync(id);
@@ -33,6 +34,7 @@ namespace TestingFeatureFlags.Services
                     Id = one.Id
                 };
             };
+            // function for retriving data (name is one) from noSql database
             var f2 = async () =>
             {
                 var one = await _oneNoSqlRepository.GetByIdAsync(id);
@@ -41,6 +43,7 @@ namespace TestingFeatureFlags.Services
                     Id = one.Id
                 };
             };
+            // function for comparing the result of two functions above
             Action<OneModel?, OneModel?> aCompare = (r1, r2) =>
             {
                 if(r2 == null)
@@ -52,6 +55,8 @@ namespace TestingFeatureFlags.Services
                     _logger.LogError($"Item in noSql Database doesn't equal to Item in sql databse");
                 }
             };
+
+            // executing the migration process
             return await FbDbMigration<OneModel?>.MigrateAsync(f1, f2, _fbClient, "data-one-migration", aCompare);
         }
     }

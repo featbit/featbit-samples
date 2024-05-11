@@ -19,7 +19,8 @@ namespace MFeatureManagement.Controllers
             _logger = logger;
         }
 
-        [FeatureGate("FeatureE")]
+        [FeatureGate("TrueFeatureFlag")]
+        [FeatureGate("FalseFeatureFlag")]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

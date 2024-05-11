@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFeatureManagement", "MFeatureManagement.csproj", "{A7296F3F-25AA-4CFB-8B8D-E9F3B4A63CE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MFeatureManagement", "MFeatureManagement.csproj", "{A7296F3F-25AA-4CFB-8B8D-E9F3B4A63CE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatBit.MFMProvider", "..\FeatBit.MFMProvider\FeatBit.MFMProvider.csproj", "{278F9E9C-9F7C-4741-BEA4-2068B691BE07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A7296F3F-25AA-4CFB-8B8D-E9F3B4A63CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7296F3F-25AA-4CFB-8B8D-E9F3B4A63CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7296F3F-25AA-4CFB-8B8D-E9F3B4A63CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{278F9E9C-9F7C-4741-BEA4-2068B691BE07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{278F9E9C-9F7C-4741-BEA4-2068B691BE07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{278F9E9C-9F7C-4741-BEA4-2068B691BE07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{278F9E9C-9F7C-4741-BEA4-2068B691BE07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

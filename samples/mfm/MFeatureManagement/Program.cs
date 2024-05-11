@@ -1,3 +1,4 @@
+using FeatBit.MFMProvider;
 using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 
@@ -7,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureManagement"));
+//builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureManagement"));
+builder.Services.AddSingleton<IFeatureDefinitionProvider, FeatBitFeatureDefinitionProvider>()
+        .AddFeatureManagement();
 
 var app = builder.Build();
 

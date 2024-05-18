@@ -37,6 +37,26 @@ namespace FeatBit.MFMProvider
                 {
                     "TargetingFeatureFlag",
                     TargetingFeatureFlag()
+                },
+                {
+                    "CombinationFeatureFlag1",
+                    CombinationFeatureFlag1()
+                },
+                {
+                    "CustomFilterFeatureFlag",
+                    CustomFilterFeatureFlag()
+                },
+                {
+                    "RealCustomFilterFeatureFlag",
+                    RealCustomFilterFeatureFlag()
+                },
+                {
+                    "FeatBitFilterFeatureFlag",
+                    FeatBitFilterFeatureFlag()
+                },
+                {
+                    "FeatBitFilterFeatureFlag2",
+                    FeatBitFilterFeatureFlag()
                 }
             };
         }
@@ -159,8 +179,8 @@ namespace FeatBit.MFMProvider
 
         private FeatureDefinition TargetingFeatureFlag()
         {
-            var json2 = "{\"Audience\":{\"Users\":[\"Jeff\",\"Alicia\"],\"Groups\":[{\"Name\":\"Ring0\",\"RolloutPercentage\":100},{\"Name\":\"Ring1\",\"RolloutPercentage\":50}],\"DefaultRolloutPercentage\":20,\"Exclusion\":{\"Users\":[\"Ross\"],\"Groups\":[\"Ring2\"]}}}";
-            var configuration = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json2))).Build();
+            var json = "{\"Audience\":{\"Users\":[\"Jeff\",\"Alicia\"],\"Groups\":[{\"Name\":\"Ring0\",\"RolloutPercentage\":100},{\"Name\":\"Ring1\",\"RolloutPercentage\":50}],\"DefaultRolloutPercentage\":20,\"Exclusion\":{\"Users\":[\"Ross\"],\"Groups\":[\"Ring2\"]}}}";
+            var configuration = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json))).Build();
             return new FeatureDefinition
             {
             
@@ -176,8 +196,90 @@ namespace FeatBit.MFMProvider
                         },
                 RequirementType = RequirementType.All
             };
+        }
 
+        private FeatureDefinition CombinationFeatureFlag1()
+        {
+            var json1 = "{\"value\":50}";
+            var configuration1 = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json1))).Build();
+            var json2 = "{\"Audience\":{\"Users\":[\"Jeff\",\"Alicia\"],\"Groups\":[{\"Name\":\"Ring0\",\"RolloutPercentage\":100},{\"Name\":\"Ring1\",\"RolloutPercentage\":50}],\"DefaultRolloutPercentage\":20,\"Exclusion\":{\"Users\":[\"Ross\"],\"Groups\":[\"Ring2\"]}}}";
+            var configuration2 = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json2))).Build();
+            return new FeatureDefinition
+            {
 
+                Name = "CombinationFeatureFlag1",
+                EnabledFor = new List<FeatureFilterConfiguration>()
+                        {
+                            new FeatureFilterConfiguration()
+                            {
+                                 Name = "Microsoft.Percentage",
+                                 Parameters = configuration1
+                            },
+                            new FeatureFilterConfiguration()
+                            {
+                                 Name = "Microsoft.Targeting",
+                                 Parameters = configuration2
+                            }
+                        },
+                RequirementType = RequirementType.All
+            };
+        }
+
+        private FeatureDefinition CustomFilterFeatureFlag()
+        {
+            return new FeatureDefinition
+            {
+
+                Name = "CombinationFeatureFlag1",
+                EnabledFor = new List<FeatureFilterConfiguration>()
+                        {
+                            new FeatureFilterConfiguration()
+                            {
+                                 Name = "Custom",
+                            }
+                        },
+                RequirementType = RequirementType.All
+            };
+        }
+
+        private FeatureDefinition RealCustomFilterFeatureFlag()
+        {
+            var json = "{\"key\":\"featureflagname\",\"variationType\":\"boolean\",\"variations\":[{\"id\":\"201909b4-0c7f-4fec-92da-9980f648e2be\",\"value\":\"true\"},{\"id\":\"202309b4-0c7f-4fec-92da-9980f65eeeee\",\"value\":\"false\"}],\"rules\":[{\"id\":\"8ee2951d-a121-47d6-b7d0-b33cf633a2ff\",\"name\":\"Groups\",\"conditions\":[{\"id\":\"4c37d50d-81cb-4caa-b3b3-fa91bd80f431\",\"property\":\"Groups\",\"op\":\"IsOneOf\",\"value\":[\"group1\"]}],\"variations\":[{\"id\":\"201909b4-0c7f-4fec-92da-9980f648e2be\",\"rollout\":[0,1],\"exptRollout\":1}]}]}";
+            var configuration = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json))).Build();
+            return new FeatureDefinition
+            {
+
+                Name = "RealCustomFilterFeatureFlag",
+                EnabledFor = new List<FeatureFilterConfiguration>()
+                        {
+                            new FeatureFilterConfiguration()
+                            {
+                                 Name = "Custom",
+                                 Parameters = configuration
+                            }
+                        },
+                RequirementType = RequirementType.All
+            };
+        }
+
+        private FeatureDefinition FeatBitFilterFeatureFlag()
+        {
+            var json = "{\"key\":\"featureflagname\",\"variationType\":\"boolean\",\"variations\":[{\"id\":\"201909b4-0c7f-4fec-92da-9980f648e2be\",\"value\":\"true\"},{\"id\":\"202309b4-0c7f-4fec-92da-9980f65eeeee\",\"value\":\"false\"}],\"rules\":[{\"id\":\"8ee2951d-a121-47d6-b7d0-b33cf633a2ff\",\"name\":\"Groups\",\"conditions\":[{\"id\":\"4c37d50d-81cb-4caa-b3b3-fa91bd80f431\",\"property\":\"Groups\",\"op\":\"IsOneOf\",\"value\":[\"group1\"]}],\"variations\":[{\"id\":\"201909b4-0c7f-4fec-92da-9980f648e2be\",\"rollout\":[0,1],\"exptRollout\":1}]}]}";
+            var configuration = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.ASCII.GetBytes(json))).Build();
+            return new FeatureDefinition
+            {
+
+                Name = "FeatBitFilterFeatureFlag",
+                EnabledFor = new List<FeatureFilterConfiguration>()
+                        {
+                            new FeatureFilterConfiguration()
+                            {
+                                 Name = "FeatBit",
+                                 Parameters = configuration
+                            }
+                        },
+                RequirementType = RequirementType.All
+            };
         }
     }
 }

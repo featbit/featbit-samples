@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.FeatureFilters;
 using Microsoft.FeatureManagement.Mvc;
-using System.Text.RegularExpressions;
 
 namespace MFeatureManagement.Controllers
 {
@@ -55,7 +54,44 @@ namespace MFeatureManagement.Controllers
                 return Ok(true);
             }
             return StatusCode(StatusCodes.Status403Forbidden);
+        }
 
+
+        [FeatureGate("CombinationFeatureFlag1")]
+        [HttpGet("Get3")]
+        public async Task<IActionResult> Get3()
+        {
+            TargetingContext targetingContext = new TargetingContext
+            {
+                UserId = "Jeff",
+                Groups = ["Ring1", "group2"]
+            };
+            if (await _featureManager.IsEnabledAsync("CombinationFeatureFlag1", targetingContext))
+            {
+                return Ok(true);
+            }
+            return StatusCode(StatusCodes.Status403Forbidden);
+        }
+
+        [FeatureGate("CustomFilterFeatureFlag")]
+        [HttpGet("CustomFilter1")]
+        public async Task<IActionResult> CustomFilter1()
+        {
+            return Ok(true);
+        }
+
+        [FeatureGate("RealCustomFilterFeatureFlag")]
+        [HttpGet("CustomFilter2")]
+        public async Task<IActionResult> CustomFilter2()
+        {
+            return Ok(true);
+        }
+
+        [FeatureGate("FeatBitFilterFeatureFlag")]
+        [HttpGet("FeatBit")]
+        public async Task<IActionResult> FeatBit()
+        {
+            return Ok(true);
         }
     }
 }

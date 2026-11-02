@@ -1,5 +1,4 @@
 import os
-from time import sleep
 from fbclient import set_config, get
 from fbclient.config import Config
 
@@ -12,12 +11,13 @@ user = {"key": user_key, "name": user_key}
 set_config(Config(env_secret, event_url, streaming_url))
 
 with get() as fb_client:
-    if fb_client.is_enabled("runner-game", user):
+    if fb_client.variation("runner-game", user, False) is True:
         print(f"Dino Game is released to {user['name']}")
-        flag_state = fb_client.variation_detail("difficulty-mode", user, "error")
-        if flag_state.success:
-            print(f"Dino Game is on {flag_state.data.variation} mode for {user['name']}")
+        detail = fb_client.variation_detail("difficulty-mode", user, "error")
+        if detail.variation_id is not None:
+            print(f"Dino Game is on {detail.variation} mode for {user['name']}")
+        else:
+            print(f"error: {detail.reason}")
     else:
         print(f"Dino Game not released to {user['name']}")
-    # be sure to send events
-    sleep(5)
+    # Exiting the context stops the SDK and attempts to flush pending events.

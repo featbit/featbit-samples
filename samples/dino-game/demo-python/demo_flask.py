@@ -1,3 +1,4 @@
+import atexit
 import os
 
 from fbclient import get, set_config
@@ -12,12 +13,13 @@ streaming_url = os.getenv("FEATBIT_SAMPLE_STREAMING_URL", "ws://localhost:5100")
 
 set_config(Config(env_secret, event_url, streaming_url))
 fb_client = get()
+atexit.register(fb_client.stop)
 
 
 @app.route("/demo/api/python/<user>", methods=['GET'])
 def is_released_game(user: str):
     fb_user = {"key": user, "name": user}
-    if fb_client.is_enabled("runner-game", fb_user):
+    if fb_client.variation("runner-game", fb_user, False) is True:
         return f"Dino Game is released to {fb_user['name']}"
     else:
         return f"Dino Game not released to {fb_user['name']}"
@@ -26,12 +28,16 @@ def is_released_game(user: str):
 @app.route("/demo/api/python/<user>/difficulty", methods=['GET'])
 def get_difficulty_mode(user: str):
     fb_user = {"key": user, "name": user}
-    if not fb_client.is_enabled("runner-game", fb_user):
+    if fb_client.variation("runner-game", fb_user, False) is not True:
         return f"Dino Game not released to {fb_user['name']}"
-    flag_state = fb_client.variation_detail("difficulty-mode", fb_user, "error")
-    if flag_state.success:
-        return f"Dino Game is on {flag_state.data.variation} mode for {fb_user['name']}"
-    return f"error: {flag_state.message}"
+    detail = fb_client.variation_detail("difficulty-mode", fb_user, "error")
+    if detail.variation_id is not None:
+        return f"Dino Game is on {detail.variation} mode for {fb_user['name']}"
+    return f"error: {detail.reason}"
 
 
-app.run(port=10000)
+if __name__ == "__main__":
+    try:
+        app.run(port=10000)
+    finally:
+        fb_client.stop()

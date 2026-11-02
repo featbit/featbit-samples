@@ -1,4 +1,4 @@
-fb-python-sdk
+fb-python-sdk>=1.1.10,<2
 flask
 flake8
 autopep8

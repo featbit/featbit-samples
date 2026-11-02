@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/featbit/featbit-go-sdk"
-	"github.com/featbit/featbit-go-sdk/interfaces"
+	"github.com/featbit/featbit-go-sdk/v2"
+	"github.com/featbit/featbit-go-sdk/v2/interfaces"
 	"os"
 )
 
@@ -16,7 +16,7 @@ func main() {
 	if streamingUrl == "" {
 		streamingUrl = "ws://localhost:5100"
 	}
-	eventUrl := os.Getenv("FEATBIT_SAMPLE_STREAMING_URL")
+	eventUrl := os.Getenv("FEATBIT_SAMPLE_EVENT_URL")
 	if eventUrl == "" {
 		eventUrl = "http://localhost:5100"
 	}
@@ -30,6 +30,7 @@ func main() {
 	if err != nil {
 		return
 	}
+	defer client.Close()
 	if client.IsInitialized() {
 		user, _ := interfaces.NewUserBuilder(userKey).Build()
 		if res, _, _ := client.BoolVariation("runner-game", user, false); res {
